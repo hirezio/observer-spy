@@ -1,0 +1,9 @@
+node_modules
+dist
+coverage
+src/**/*.js* 
+**/*.d.ts
+.vscode
+.cache
+TODO
+yarn-error.log
