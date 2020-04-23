@@ -5,17 +5,15 @@ cache:
   yarn: true
   directories:
     - ~/.npm
+    - node_modules
 notifications:
   email: false
 node_js:
   - '12'
   - '11'
-addons:
-  chrome: stable
-before_install:
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
-  - sleep 3 # give xvfb some time to start
+branches:
+  except:
+    - /^v\d+\.\d+\.\d+$/
 install:
   - yarn global add codecov typescript
   - yarn
@@ -23,8 +21,11 @@ script:
   - yarn run lint
   - yarn run test
   - codecov
-after_success:
-  - yarn run travis-deploy-once "npm run semantic-release"
-branches:
-  except:
-    - /^v\d+\.\d+\.\d+$/
+jobs:
+  include:
+    - stage: release
+      deploy:
+        provider: script
+        skip_cleanup: true
+        script:
+          - yarn semantic-release
