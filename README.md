@@ -121,7 +121,9 @@ it('should spy on Observable errors', () => {
 
 # Testing Async Observables
 
-If you have async operators like `delay` or `timeout` in your tests, you can use the `fakeTime` utility function and call `flush()` to simulate the passage of time.
+#### `it('should do something', fakeTime((flush) => {  ... flush(); });`
+
+You can use the `fakeTime` utility function and call `flush()` to simulate the passage of time, if you have any async operators like `delay` or `timeout` in your tests, 
 
 ### [SEE AN EXAMPLE HERE](#-for-time-based-rxjs-code-timeouts--intervals--animations---use-faketime)
 
