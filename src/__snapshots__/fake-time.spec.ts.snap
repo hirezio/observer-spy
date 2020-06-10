@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`fakeTime should fail with no parameters 1`] = `
+"
+    \\"fakeTime()\\" callback must be declared with at least one parameter
+    For example: fakeAsync((flush)=> ...)
+    "
+`;
