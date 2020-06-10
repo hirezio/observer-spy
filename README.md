@@ -52,6 +52,9 @@ You can also spy on the `error` or `complete` states of the observer.
 **Example:**
 
 ```js
+// ... other imports
+import { ObserverSpy } from '@hirez_io/observer-spy';
+
 it('should spy on Observable values', () => {
   const observerSpy = new ObserverSpy();
   const fakeValues = ['first', 'second', 'third'];
@@ -103,6 +106,10 @@ it('should spy on Observable errors', () => {
 Example:
 
 ```js
+// ... other imports
+import { ObserverSpy } from '@hirez_io/observer-spy';
+import { fakeAsync, tick } from '@angular/core/testing';
+
 it('should test Angular code with delay', fakeAsync(() => {
   const observerSpy = new ObserverSpy();
 
@@ -125,6 +132,9 @@ You don't even need to use an observer spy
 Example:
 
 ```js
+// ... other imports
+import { ObserverSpy } from '@hirez_io/observer-spy';
+
 it('should work with promises', (done) => {
   const observerSpy: ObserverSpy<string> = new ObserverSpy();
 
@@ -157,6 +167,9 @@ It does the following things:
 Example:
 
 ```js
+// ... other imports
+import { ObserverSpy, fakeTime } from '@hirez_io/observer-spy';
+
 it(
   'should handle delays with a virtual scheduler',
   fakeTime((flush) => {
