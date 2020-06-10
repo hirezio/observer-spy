@@ -77,6 +77,10 @@ it('should spy on Observable values', () => {
   expect(observerSpy.getLastValue()).toEqual('third');
 
   expect(observerSpy.receivedComplete()).toBe(true);
+
+  observerSpy.onComplete(() => {
+    expect(observerSpy.receivedComplete()).toBe(true);
+  }));
 });
 
 it('should spy on Observable errors', () => {

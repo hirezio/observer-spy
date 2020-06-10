@@ -1,27 +1,47 @@
 import { Observer } from 'rxjs';
 
+export interface ObserverState {
+  nextCalled: boolean;
+  errorCalled: boolean;
+  completeCalled: boolean;
+  errorValue: any;
+  onCompleteCallback: (() => void) | undefined;
+}
+
 export class ObserverSpy<T> implements Observer<T> {
   private onNextValues: T[] = [];
 
-  private observerState = {
-    onNextCalled: false,
-    onErrorCalled: false,
-    onCompleteCalled: false,
+  private observerState: ObserverState = {
+    nextCalled: false,
+    errorCalled: false,
+    completeCalled: false,
     errorValue: undefined,
+    onCompleteCallback: undefined,
   };
 
   next(value: T): void {
     this.onNextValues.push(value);
-    this.observerState.onNextCalled = true;
+    this.observerState.nextCalled = true;
   }
 
   error(errorVal: any): void {
     this.observerState.errorValue = errorVal;
-    this.observerState.onErrorCalled = true;
+    this.observerState.errorCalled = true;
   }
 
   complete(): void {
-    this.observerState.onCompleteCalled = true;
+    this.observerState.completeCalled = true;
+    if (this.observerState.onCompleteCallback) {
+      this.observerState.onCompleteCallback();
+    }
+  }
+
+  onComplete(callback: () => void) {
+    if (this.observerState.completeCalled) {
+      callback();
+      return;
+    }
+    this.observerState.onCompleteCallback = callback;
   }
 
   getValuesLength(): number {
@@ -45,7 +65,7 @@ export class ObserverSpy<T> implements Observer<T> {
   }
 
   receivedNext(): boolean {
-    return this.observerState.onNextCalled;
+    return this.observerState.nextCalled;
   }
 
   getError(): any {
@@ -53,10 +73,10 @@ export class ObserverSpy<T> implements Observer<T> {
   }
 
   receivedError(): boolean {
-    return this.observerState.onErrorCalled;
+    return this.observerState.errorCalled;
   }
 
   receivedComplete(): boolean {
-    return this.observerState.onCompleteCalled;
+    return this.observerState.completeCalled;
   }
 }

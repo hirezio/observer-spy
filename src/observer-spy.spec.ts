@@ -1,4 +1,5 @@
 import { Observable, of, throwError } from 'rxjs';
+import { delay } from 'rxjs/operators';
 import { ObserverSpy } from './observer-spy';
 
 describe('ObserverSpy', () => {
@@ -70,6 +71,28 @@ describe('ObserverSpy', () => {
       fakeObservable.subscribe(observerSpy).unsubscribe();
 
       expect(observerSpy.receivedComplete()).toBe(true);
+    });
+
+    it('should be able to call a callback when it completes synchronously ', (done) => {
+      const { observerSpy, fakeObservable } = getObservableWith3Values();
+
+      fakeObservable.subscribe(observerSpy);
+
+      observerSpy.onComplete(() => {
+        expect(observerSpy.receivedComplete()).toBe(true);
+        done();
+      });
+    });
+
+    it('should be able to call a callback when it completes asynchronously', (done) => {
+      const { observerSpy, fakeObservable } = getObservableWith3Values();
+
+      fakeObservable.pipe(delay(1)).subscribe(observerSpy);
+
+      observerSpy.onComplete(() => {
+        expect(observerSpy.receivedComplete()).toBe(true);
+        done();
+      });
     });
   });
 
