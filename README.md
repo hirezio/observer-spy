@@ -49,15 +49,15 @@ You need to learn and understand `cold` and `hot` observables, `schedulers` and 
 
 More complex observable chains tests gets even harder to read. 
 
-That's why, for most if not all production apps (not operator libraries), this library is far easier and get the job done faster and cleaner.
+So that's why this library was created - to present another alternative to marble tests that I believe is more cleaner and easier to understand and implement. 
 
-### Why is that? Because...
+### How observer spies are cleaner?
 
-In your tests you want to test the outcome, not the implementation details. 
+You generally want to test the outcome of your action, not implementation details like exactly how many frames were between each value. 
 
-The order of recieved values is far more important than the time that passed between each value. 
+The order of recieved values represents the desired outcome for most production apps use cases.
 
-As long as enough (virtual) time passes in my test, I can prove that the expected outcome is valid or not. 
+Most of the time, if enough (virtual) time passes until the expectation in my test, it should be sufficient to prove whether the expected outcome is valid or not.
 
 
 
