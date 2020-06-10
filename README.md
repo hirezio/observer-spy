@@ -23,7 +23,7 @@ Testing RxJS observables is usually hard, especially when testing advanced use c
 
 This library:
 
-✅ **Easy to understand**
+✅ **Is easy to understand**
 
 ✅ **Reduces the complexity**
 
