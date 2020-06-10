@@ -205,8 +205,7 @@ Example:
 import { ObserverSpy, fakeTime } from '@hirez_io/observer-spy';
 
 it(
-  'should handle delays with a virtual scheduler',
-  fakeTime((flush) => {
+  'should handle delays with a virtual scheduler', fakeTime((flush) => {
     const VALUES = ['first', 'second', 'third'];
     const observerSpy: ObserverSpy<string> = new ObserverSpy();
     const delayedObservable: Observable<string> = of(...VALUES).pipe(delay(20000));
@@ -220,8 +219,7 @@ it(
 );
 
 it(
-  'should handle be able to deal with done functionality as well',
-  fakeTime((flush, done) => {
+  'should handle be able to deal with done functionality as well', fakeTime((flush, done) => {
     const VALUES = ['first', 'second', 'third'];
     const observerSpy: ObserverSpy<string> = new ObserverSpy();
     const delayedObservable: Observable<string> = of(...VALUES).pipe(delay(20000));
