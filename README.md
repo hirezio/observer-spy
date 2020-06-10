@@ -41,6 +41,26 @@ or
 npm install -D @hirez_io/observer-spy
 ```
 
+## Why not marble testing?
+
+[Marble tests](https://rxjs-dev.firebaseapp.com/guide/testing/internal-marble-tests) are very powerful, but at the same time very complicated to learn and to reason about (IMO). 
+
+You need to learn and understand `cold` and `hot` observables, `schedulers` and to learn a new syntax just to test a simple observable chain.
+
+More complex observable chains tests gets even harder to read. 
+
+That's why, for most if not all production apps (not operator libraries), this library is far easier and get the job done faster and cleaner.
+
+### Why is that? Because...
+
+In your tests you want to test the outcome, not the implementation details. 
+
+The order of recieved values is far more important than the time that passed between each value. 
+
+As long as enough (virtual) time passes in my test, I can prove that the expected outcome is valid or not. 
+
+
+
 ## Usage
 
 #### `new ObserverSpy()`
@@ -101,7 +121,19 @@ it('should spy on Observable errors', () => {
 
 # Testing Async Observables
 
+If you have async operators like `delay` or `timeout` in your tests, you can use the `fakeTime` utility function and call `flush()` to simulate the passage of time.
+
+### [SEE AN EXAMPLE HERE](#-for-time-based-rxjs-code-timeouts--intervals--animations---use-faketime)
+
+---
+
+## Now, let's see some use cases and their solutions:
+
 ### ▶ For _Angular_ code - just use `fakeAsync`
+
+You can control time in a much more versitle way and to clear the microtasks queue (for promises) without using the `done()` which is much more convenient. 
+
+So just use `fakeAsync` (and `tick` if you need it)
 
 Example:
 
@@ -127,7 +159,7 @@ it('should test Angular code with delay', fakeAsync(() => {
 
 ### ▶ For only _promises_ (no timeouts / intervals) - just use `done`
 
-You don't even need to use an observer spy
+You can use the `onComplete` method of the ObserverSpy to run the expectation and call `done` 
 
 Example:
 
