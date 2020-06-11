@@ -49,7 +49,7 @@ You need to learn and understand `cold` and `hot` observables, `schedulers` and 
 
 More complex observable chains tests gets even harder to read. 
 
-So that's why this library was created - to present another alternative to marble tests that I believe is more cleaner and easier to understand and implement. 
+That's why this library was created - to present another alternative to marble tests which I believe is more cleaner and easier to understand and to implement. 
 
 ### How observer spies are cleaner?
 
