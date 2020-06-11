@@ -194,8 +194,8 @@ it('should work with promises', (done) => {
 
 It does the following things:
 
-1. Changes the `AsyncScheduler` delegate to use `VirtualTimeScheduler` (which gives you the ability to use "virtual time" instead of having long tests.
-2. Passes a `flush` function you can call to `flush()` when you want to virtually pass time forward.
+1. Changes the `AsyncScheduler` delegate to use `VirtualTimeScheduler` (which gives you the ability to use "virtual time" instead of having long tests).
+2. Passes a `flush` function you can call to `flush()` the virtual time (pass time forward).
 3. Works well with `done` if you pass it as the second parameter (instead of the first)
 
 Example:
@@ -234,11 +234,11 @@ it(
     });
   })
 );
-```
+``` 
 
-### ▶ For _ajax_ calls (http) - they shouldn't be tested in a unit / micro test... 😜
+### ▶ For _ajax_ calls (http) - they shouldn't be tested in a unit / micro test anyway... 😜
 
-Yeah. Test those in an integration test
+Yeah. test those in an integration test!
 
 ## Wanna learn more?
 
