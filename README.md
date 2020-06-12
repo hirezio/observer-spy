@@ -43,23 +43,21 @@ npm install -D @hirez_io/observer-spy
 
 ## Why not marble testing?
 
-[Marble tests](https://rxjs-dev.firebaseapp.com/guide/testing/internal-marble-tests) are very powerful, but at the same time very complicated to learn and to reason about (IMO). 
+[Marble tests](https://rxjs-dev.firebaseapp.com/guide/testing/internal-marble-tests) are very powerful, but at the same time very complicated to learn and to reason about (IMO).
 
 You need to learn and understand `cold` and `hot` observables, `schedulers` and to learn a new syntax just to test a simple observable chain.
 
-More complex observable chains tests gets even harder to read. 
+More complex observable chains tests gets even harder to read.
 
-That's why this library was created - to present another alternative to marble tests which I believe is more cleaner and easier to understand and to implement. 
+That's why this library was created - to present another alternative to marble tests which I believe is more cleaner and easier to understand and to implement.
 
 ### How observer spies are cleaner?
 
-You generally want to test the outcome of your action, not implementation details like exactly how many frames were between each value. 
+You generally want to test the outcome of your action, not implementation details like exactly how many frames were between each value.
 
 The order of recieved values represents the desired outcome for most production apps use cases.
 
 Most of the time, if enough (virtual) time passes until the expectation in my test, it should be sufficient to prove whether the expected outcome is valid or not.
-
-
 
 ## Usage
 
@@ -75,12 +73,11 @@ You can also spy on the `error` or `complete` states of the observer.
 // ... other imports
 import { ObserverSpy } from '@hirez_io/observer-spy';
 
-it('should spy on Observable values', () => {
-  
+it('should spy on Observable values', async () => {
   const observerSpy = new ObserverSpy();
   // BTW, if you're using TypeScript you can declare it with a generic:
   // const observerSpy: ObserverSpy<string> = new ObserverSpy();
-  
+
   const fakeValues = ['first', 'second', 'third'];
   const fakeObservable = of(...fakeValues);
 
@@ -105,9 +102,9 @@ it('should spy on Observable values', () => {
 
   expect(observerSpy.receivedComplete()).toBe(true);
 
-  observerSpy.onComplete(() => {
-    expect(observerSpy.receivedComplete()).toBe(true);
-  }));
+  await observerSpy.onComplete();
+
+  expect(observerSpy.receivedComplete()).toBe(true);
 });
 
 it('should spy on Observable errors', () => {
@@ -125,9 +122,9 @@ it('should spy on Observable errors', () => {
 
 # Testing Async Observables
 
-#### `it('should do something', fakeTime((flush) => {  ... flush(); });`
+#### `it('should do something', fakeTime((flush) => { ... flush(); });`
 
-You can use the `fakeTime` utility function and call `flush()` to simulate the passage of time, if you have any async operators like `delay` or `timeout` in your tests, 
+You can use the `fakeTime` utility function and call `flush()` to simulate the passage of time, if you have any async operators like `delay` or `timeout` in your tests,
 
 ### [SEE AN EXAMPLE HERE](#-for-time-based-rxjs-code-timeouts--intervals--animations---use-faketime)
 
@@ -137,7 +134,7 @@ You can use the `fakeTime` utility function and call `flush()` to simulate the p
 
 ### ▶ For _Angular_ code - just use `fakeAsync`
 
-You can control time in a much more versitle way and to clear the microtasks queue (for promises) without using the `done()` which is much more convenient. 
+You can control time in a much more versitle way and to clear the microtasks queue (for promises) without using the `done()` which is much more convenient.
 
 So just use `fakeAsync` (and `tick` if you need it)
 
@@ -163,9 +160,9 @@ it('should test Angular code with delay', fakeAsync(() => {
 }));
 ```
 
-### ▶ For only _promises_ (no timeouts / intervals) - just use `done`
+### ▶ For rxjs code (no timeouts / intervals) - just use `async` `await`
 
-You can use the `onComplete` method of the ObserverSpy to run the expectation and call `done` 
+You can use the `onComplete` method of the ObserverSpy to run the expectation.
 
 Example:
 
@@ -173,7 +170,24 @@ Example:
 // ... other imports
 import { ObserverSpy } from '@hirez_io/observer-spy';
 
-it('should work with promises', (done) => {
+it('should work with observables', async () => {
+  const observerSpy: ObserverSpy<string> = new ObserverSpy();
+
+  const fakeService = {
+    getData() {
+      return defer(() => of('fake data'));
+    },
+  };
+  const fakeObservable = of('').pipe(switchMap(() => fakeService.getData()));
+
+  fakeObservable.subscribe(observerSpy);
+
+  await observerSpy.onComplete();
+
+  expect(observerSpy.getLastValue()).toEqual('fake data');
+});
+
+it('should work with promises', async () => {
   const observerSpy: ObserverSpy<string> = new ObserverSpy();
 
   const fakeService = {
@@ -185,10 +199,9 @@ it('should work with promises', (done) => {
 
   fakeObservable.subscribe(observerSpy);
 
-  observerSpy.onComplete(() => {
-    expect(observerSpy.getLastValue()).toEqual('fake data');
-    done();
-  });
+  await observerSpy.onComplete();
+
+  expect(observerSpy.getLastValue()).toEqual('fake data');
 });
 ```
 
@@ -209,7 +222,8 @@ Example:
 import { ObserverSpy, fakeTime } from '@hirez_io/observer-spy';
 
 it(
-  'should handle delays with a virtual scheduler', fakeTime((flush) => {
+  'should handle delays with a virtual scheduler',
+  fakeTime((flush) => {
     const VALUES = ['first', 'second', 'third'];
     const observerSpy: ObserverSpy<string> = new ObserverSpy();
     const delayedObservable: Observable<string> = of(...VALUES).pipe(delay(20000));
@@ -223,7 +237,8 @@ it(
 );
 
 it(
-  'should handle be able to deal with done functionality as well', fakeTime((flush, done) => {
+  'should handle be able to deal with done functionality as well',
+  fakeTime((flush, done) => {
     const VALUES = ['first', 'second', 'third'];
     const observerSpy: ObserverSpy<string> = new ObserverSpy();
     const delayedObservable: Observable<string> = of(...VALUES).pipe(delay(20000));
@@ -238,7 +253,7 @@ it(
     });
   })
 );
-``` 
+```
 
 ### ▶ For _ajax_ calls (http) - they shouldn't be tested in a unit / micro test anyway... 😜
 
