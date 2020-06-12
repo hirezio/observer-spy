@@ -1,6 +1,6 @@
 # @hirez_io/observer-spy 👀💪
 
-A simple little class and a helper function that help making Observable testing a breeze
+A simple little class and a helper function that help make Observable testing a breeze
 
 [![npm version](https://img.shields.io/npm/v/@hirez_io/observer-spy.svg?style=flat-square)](https://www.npmjs.org/package/@hirez_io/observer-spy)
 [![npm downloads](https://img.shields.io/npm/dm/@hirez_io/observer-spy.svg?style=flat-square)](http://npm-stat.com/charts.html?package=@hirez_io/observer-spy&from=2017-07-26)
