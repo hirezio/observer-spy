@@ -1,6 +1,6 @@
 # @hirez_io/observer-spy 👀💪
 
-A simple little class and a helper function that help making Observable testing a breeze
+A simple little class and a helper function that helps make Observable testing a breeze
 
 [![npm version](https://img.shields.io/npm/v/@hirez_io/observer-spy.svg?style=flat-square)](https://www.npmjs.org/package/@hirez_io/observer-spy)
 [![npm downloads](https://img.shields.io/npm/dm/@hirez_io/observer-spy.svg?style=flat-square)](http://npm-stat.com/charts.html?package=@hirez_io/observer-spy&from=2017-07-26)
@@ -47,15 +47,15 @@ npm install -D @hirez_io/observer-spy
 
 You need to learn and understand `cold` and `hot` observables, `schedulers` and to learn a new syntax just to test a simple observable chain.
 
-More complex observable chains tests gets even harder to read. 
+More complex observable chains tests get even harder to read. 
 
-That's why this library was created - to present another alternative to marble tests which I believe is more cleaner and easier to understand and to implement. 
+That's why this library was created - to present another alternative to marble tests, which I believe is cleaner and easier to understand and to implement. 
 
 ### How observer spies are cleaner?
 
 You generally want to test the outcome of your action, not implementation details like exactly how many frames were between each value. 
 
-The order of recieved values represents the desired outcome for most production apps use cases.
+The order of recieved values represents the desired outcome for most production app use cases.
 
 Most of the time, if enough (virtual) time passes until the expectation in my test, it should be sufficient to prove whether the expected outcome is valid or not.
 
@@ -127,7 +127,7 @@ it('should spy on Observable errors', () => {
 
 #### `it('should do something', fakeTime((flush) => {  ... flush(); });`
 
-You can use the `fakeTime` utility function and call `flush()` to simulate the passage of time, if you have any async operators like `delay` or `timeout` in your tests, 
+You can use the `fakeTime` utility function and call `flush()` to simulate the passage of time if you have any async operators like `delay` or `timeout` in your tests.
 
 ### [SEE AN EXAMPLE HERE](#-for-time-based-rxjs-code-timeouts--intervals--animations---use-faketime)
 
@@ -137,9 +137,9 @@ You can use the `fakeTime` utility function and call `flush()` to simulate the p
 
 ### ▶ For _Angular_ code - just use `fakeAsync`
 
-You can control time in a much more versitle way and to clear the microtasks queue (for promises) without using the `done()` which is much more convenient. 
+You can control time in a much more versitle way and clear the microtasks queue (for promises) without using the `done()` which is much more convenient. 
 
-So just use `fakeAsync` (and `tick` if you need it)
+Just use `fakeAsync` (and `tick` if you need it).
 
 Example:
 
@@ -165,7 +165,7 @@ it('should test Angular code with delay', fakeAsync(() => {
 
 ### ▶ For only _promises_ (no timeouts / intervals) - just use `done`
 
-You can use the `onComplete` method of the ObserverSpy to run the expectation and call `done` 
+You can use the `onComplete` method of the ObserverSpy to run the expectation and call `done`. 
 
 Example:
 
@@ -198,8 +198,8 @@ it('should work with promises', (done) => {
 
 It does the following things:
 
-1. Changes the `AsyncScheduler` delegate to use `VirtualTimeScheduler` (which gives you the ability to use "virtual time" instead of having long tests).
-2. Passes a `flush` function you can call to `flush()` the virtual time (pass time forward).
+1. Changes the `AsyncScheduler` delegate to use `VirtualTimeScheduler` (which gives you the ability to use "virtual time" instead of having long tests)
+2. Passes a `flush` function you can call to `flush()` the virtual time (pass time forward)
 3. Works well with `done` if you pass it as the second parameter (instead of the first)
 
 Example:
@@ -242,7 +242,7 @@ it(
 
 ### ▶ For _ajax_ calls (http) - they shouldn't be tested in a unit / micro test anyway... 😜
 
-Yeah. test those in an integration test!
+Yeah. Test those in an integration test!
 
 ## Wanna learn more?
 
