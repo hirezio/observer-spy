@@ -74,7 +74,11 @@ You can also spy on the `error` or `complete` states of the observer.
 import { ObserverSpy } from '@hirez_io/observer-spy';
 
 it('should spy on Observable values', () => {
+  
   const observerSpy = new ObserverSpy();
+  // BTW, if you're using TypeScript you can declare it with a generic:
+  // const observerSpy: ObserverSpy<string> = new ObserverSpy();
+  
   const fakeValues = ['first', 'second', 'third'];
   const fakeObservable = of(...fakeValues);
 
