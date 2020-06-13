@@ -17,7 +17,8 @@
       "profile": "http://www.hirez.io/",
       "contributions": [
         "code",
-        "test"
+        "test",
+        "infra"
       ]
     }
   ],
