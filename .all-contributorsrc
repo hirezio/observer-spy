@@ -19,7 +19,8 @@
         "code",
         "test",
         "infra",
-        "doc"
+        "doc",
+        "maintenance"
       ]
     }
   ],
