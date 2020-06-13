@@ -36,12 +36,21 @@ export class ObserverSpy<T> implements Observer<T> {
     }
   }
 
-  onComplete(callback: () => void) {
+  onComplete(): Promise<void>;
+  onComplete(callback: () => void): void;
+  onComplete(callback?: () => void) {
     if (this.observerState.completeCalled) {
-      callback();
+      return callback ? callback() : Promise.resolve();
+    }
+
+    if (callback) {
+      this.observerState.onCompleteCallback = callback;
       return;
     }
-    this.observerState.onCompleteCallback = callback;
+
+    return new Promise((resolve) => {
+      this.observerState.onCompleteCallback = resolve;
+    });
   }
 
   getValuesLength(): number {

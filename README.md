@@ -67,6 +67,8 @@ In order to test observables, you can use an `ObserverSpy` instance to "record" 
 
 You can also spy on the `error` or `complete` states of the observer.
 
+You can use `done` or `async` / `await` to wait for `onComplete` to be called as well.
+
 **Example:**
 
 ```js
@@ -74,7 +76,6 @@ You can also spy on the `error` or `complete` states of the observer.
 import { ObserverSpy } from '@hirez_io/observer-spy';
 
 it('should spy on Observable values', () => {
-
   const observerSpy = new ObserverSpy();
   // BTW, if you're using TypeScript you can declare it with a generic:
   // const observerSpy: ObserverSpy<string> = new ObserverSpy();
@@ -106,6 +107,17 @@ it('should spy on Observable values', () => {
   observerSpy.onComplete(() => {
     expect(observerSpy.receivedComplete()).toBe(true);
   }));
+});
+
+it('should support async await for onComplete()', async ()=>{
+  const observerSpy = new ObserverSpy();
+  const fakeObservable = of('first', 'second', 'third');
+
+  fakeObservable.subscribe(observerSpy);
+
+  await observerSpy.onComplete();
+
+  expect(observerSpy.receivedComplete()).toBe(true);
 });
 
 it('should spy on Observable errors', () => {
@@ -161,9 +173,10 @@ it('should test Angular code with delay', fakeAsync(() => {
 }));
 ```
 
-### ▶ For only _promises_ (no timeouts / intervals) - just use `done`
+### ▶ For microtasks related code (promises, but no timeouts / intervals) - just use `async` `await` or `done()`
 
-You can use the `onComplete` method of the ObserverSpy to run the expectation and call `done`.
+You can use the `onComplete` method to wait for a completion before checking the outcome.
+Chose between `async` + `await` or `done`, both work.
 
 Example:
 
@@ -171,7 +184,24 @@ Example:
 // ... other imports
 import { ObserverSpy } from '@hirez_io/observer-spy';
 
-it('should work with promises', (done) => {
+it('should work with observables', async () => {
+  const observerSpy: ObserverSpy<string> = new ObserverSpy();
+
+  const fakeService = {
+    getData() {
+      return defer(() => of('fake data'));
+    },
+  };
+  const fakeObservable = of('').pipe(switchMap(() => fakeService.getData()));
+
+  fakeObservable.subscribe(observerSpy);
+
+  await observerSpy.onComplete();
+
+  expect(observerSpy.getLastValue()).toEqual('fake data');
+});
+
+it('should work with promises', async () => {
   const observerSpy: ObserverSpy<string> = new ObserverSpy();
 
   const fakeService = {
@@ -179,7 +209,24 @@ it('should work with promises', (done) => {
       return Promise.resolve('fake data');
     },
   };
-  const fakeObservable = of('').pipe(switchMap(() => fakeService.getData()));
+  const fakeObservable = defer(() => fakeService.getData());
+
+  fakeObservable.subscribe(observerSpy);
+
+  await observerSpy.onComplete();
+
+  expect(observerSpy.getLastValue()).toEqual('fake data');
+});
+
+it('should work with promises and "done()"', (done) => {
+  const observerSpy: ObserverSpy<string> = new ObserverSpy();
+
+  const fakeService = {
+    getData() {
+      return Promise.resolve('fake data');
+    },
+  };
+  const fakeObservable = defer(() => fakeService.getData());
 
   fakeObservable.subscribe(observerSpy);
 

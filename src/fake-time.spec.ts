@@ -51,4 +51,18 @@ describe('fakeTime', () => {
       });
     })
   );
+
+  it(
+    'should support async await functionality',
+    fakeTime(async (flush) => {
+      const { observerSpy, delayedObservable, VALUES } = getDelayedObservable();
+
+      const sub = delayedObservable.subscribe(observerSpy);
+      flush();
+      sub.unsubscribe();
+
+      await observerSpy.onComplete();
+      expect(observerSpy.getValues()).toEqual(VALUES);
+    })
+  );
 });

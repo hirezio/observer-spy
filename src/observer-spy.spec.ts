@@ -73,7 +73,7 @@ describe('ObserverSpy', () => {
       expect(observerSpy.receivedComplete()).toBe(true);
     });
 
-    it('should be able to call a callback when it completes synchronously ', (done) => {
+    it('should be able to call a callback when it completes synchronously', (done) => {
       const { observerSpy, fakeObservable } = getObservableWith3Values();
 
       fakeObservable.subscribe(observerSpy);
@@ -82,6 +82,15 @@ describe('ObserverSpy', () => {
         expect(observerSpy.receivedComplete()).toBe(true);
         done();
       });
+    });
+
+    it('should return a resolved promise when it completes synchronously', async () => {
+      const { observerSpy, fakeObservable } = getObservableWith3Values();
+
+      fakeObservable.subscribe(observerSpy);
+
+      await observerSpy.onComplete();
+      expect(observerSpy.receivedComplete()).toBe(true);
     });
 
     it('should be able to call a callback when it completes asynchronously', (done) => {
@@ -93,6 +102,15 @@ describe('ObserverSpy', () => {
         expect(observerSpy.receivedComplete()).toBe(true);
         done();
       });
+    });
+
+    it('should return a resolved promise when it completes asynchronously', async () => {
+      const { observerSpy, fakeObservable } = getObservableWith3Values();
+
+      fakeObservable.pipe(delay(1)).subscribe(observerSpy);
+
+      await observerSpy.onComplete();
+      expect(observerSpy.receivedComplete()).toBe(true);
     });
   });
 
