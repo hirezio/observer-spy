@@ -1,12 +1,12 @@
 # @hirez_io/observer-spy 👀💪
 
-A simple little class and a helper function that help making Observable testing a breeze
+A simple little class and a helper function that help make Observable testing a breeze
 
 [![npm version](https://img.shields.io/npm/v/@hirez_io/observer-spy.svg?style=flat-square)](https://www.npmjs.org/package/@hirez_io/observer-spy)
 [![npm downloads](https://img.shields.io/npm/dm/@hirez_io/observer-spy.svg?style=flat-square)](http://npm-stat.com/charts.html?package=@hirez_io/observer-spy&from=2017-07-26)
 [![Build Status](https://travis-ci.org/hirezio/observer-spy.svg?branch=master)](https://travis-ci.org/hirezio/observer-spy)
-[![codecov](https://img.shields.io/codecov/c/github/hirezio/observer-spy.svg)](https://codecov.io/gh/hirezio/observer-spy)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![codecov](https://img.shields.io/codecov/c/github/hirezio/observer-spy.svg)](https://codecov.io/gh/hirezio/observer-spy) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-) <!-- ALL-CONTRIBUTORS-BADGE:END --> [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 <div align="center">
   <a href="http://testangular.com/?utm_source=github&utm_medium=link&utm_campaign=observer-spy">
@@ -47,15 +47,15 @@ npm install -D @hirez_io/observer-spy
 
 You need to learn and understand `cold` and `hot` observables, `schedulers` and to learn a new syntax just to test a simple observable chain.
 
-More complex observable chains tests gets even harder to read.
+More complex observable chains tests get even harder to read.
 
-That's why this library was created - to present another alternative to marble tests which I believe is more cleaner and easier to understand and to implement.
+That's why this library was created - to present another alternative to marble tests, which I believe is cleaner and easier to understand and to implement.
 
 ### How observer spies are cleaner?
 
 You generally want to test the outcome of your action, not implementation details like exactly how many frames were between each value.
 
-The order of recieved values represents the desired outcome for most production apps use cases.
+The order of recieved values represents the desired outcome for most production app use cases.
 
 Most of the time, if enough (virtual) time passes until the expectation in my test, it should be sufficient to prove whether the expected outcome is valid or not.
 
@@ -137,7 +137,7 @@ it('should spy on Observable errors', () => {
 
 #### `it('should do something', fakeTime((flush) => { ... flush(); });`
 
-You can use the `fakeTime` utility function and call `flush()` to simulate the passage of time, if you have any async operators like `delay` or `timeout` in your tests,
+You can use the `fakeTime` utility function and call `flush()` to simulate the passage of time if you have any async operators like `delay` or `timeout` in your tests.
 
 ### [SEE AN EXAMPLE HERE](#-for-time-based-rxjs-code-timeouts--intervals--animations---use-faketime)
 
@@ -147,9 +147,9 @@ You can use the `fakeTime` utility function and call `flush()` to simulate the p
 
 ### ▶ For _Angular_ code - just use `fakeAsync`
 
-You can control time in a much more versitle way and to clear the microtasks queue (for promises) without using the `done()` which is much more convenient.
+You can control time in a much more versatile way and clear the microtasks queue (for promises) without using the `done()` which is much more convenient.
 
-So just use `fakeAsync` (and `tick` if you need it)
+Just use `fakeAsync` (and `tick` if you need it).
 
 Example:
 
@@ -175,7 +175,8 @@ it('should test Angular code with delay', fakeAsync(() => {
 
 ### ▶ For microtasks related code (promises, but no timeouts / intervals) - just use `async` `await` or `done()`
 
-You can use the `onComplete` method of the ObserverSpy to run the expectation.
+You can use the `onComplete` method to wait for a completion before checking the outcome.
+Chose between `async` + `await` or `done`, both work.
 
 Example:
 
@@ -242,8 +243,8 @@ it('should work with promises and "done()"', (done) => {
 
 It does the following things:
 
-1. Changes the `AsyncScheduler` delegate to use `VirtualTimeScheduler` (which gives you the ability to use "virtual time" instead of having long tests).
-2. Passes a `flush` function you can call to `flush()` the virtual time (pass time forward).
+1. Changes the `AsyncScheduler` delegate to use `VirtualTimeScheduler` (which gives you the ability to use "virtual time" instead of having long tests)
+2. Passes a `flush` function you can call to `flush()` the virtual time (pass time forward)
 3. Works well with `done` if you pass it as the second parameter (instead of the first)
 
 Example:
@@ -288,8 +289,28 @@ it(
 
 ### ▶ For _ajax_ calls (http) - they shouldn't be tested in a unit / micro test anyway... 😜
 
-Yeah. test those in an integration test!
+Yeah. Test those in an integration test!
 
-## Wanna learn more?
+# Wanna learn more?
 
-In my [class testing In action course](http://testangular.com/?utm_source=github&utm_medium=link&utm_campaign=observer-spy) I go over all the differences and show you how to use this library to test stuff like `switchMap`, `interval` etc...
+## In my [class testing In action course](http://testangular.com/?utm_source=github&utm_medium=link&utm_campaign=observer-spy) I go over all the differences and show you how to use this library to test stuff like `switchMap`, `interval` etc...
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="http://www.hirez.io/"><img src="https://avatars1.githubusercontent.com/u/1430726?v=4" width="100px;" alt=""/><br /><sub><b>Shai Reznik</b></sub></a><br /><a href="https://github.com/hirezio/observer-spy/commits?author=shairez" title="Code">💻</a> <a href="https://github.com/hirezio/observer-spy/commits?author=shairez" title="Tests">⚠️</a> <a href="#infra-shairez" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/hirezio/observer-spy/commits?author=shairez" title="Documentation">📖</a> <a href="#maintenance-shairez" title="Maintenance">🚧</a> <a href="https://github.com/hirezio/observer-spy/pulls?q=is%3Apr+reviewed-by%3Ashairez" title="Reviewed Pull Requests">👀</a> <a href="#ideas-shairez" title="Ideas, Planning, & Feedback">🤔</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
