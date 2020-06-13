@@ -84,7 +84,7 @@ describe('ObserverSpy', () => {
       });
     });
 
-    it('should be able to resolve a Promise when it completes synchronously', async () => {
+    it('should return a resolved promise when it completes synchronously', async () => {
       const { observerSpy, fakeObservable } = getObservableWith3Values();
 
       fakeObservable.subscribe(observerSpy);
@@ -104,7 +104,7 @@ describe('ObserverSpy', () => {
       });
     });
 
-    it('should be able to resolve a Promise when it completes asynchronously', async () => {
+    it('should return a resolved promise when it completes asynchronously', async () => {
       const { observerSpy, fakeObservable } = getObservableWith3Values();
 
       fakeObservable.pipe(delay(1)).subscribe(observerSpy);
