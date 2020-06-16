@@ -43,15 +43,15 @@ or
 npm install -D @hirez_io/observer-spy
 ```
 
-## Why not marble testing?
+## Observer Spies VS Marble Tests
 
-[Marble tests](https://rxjs-dev.firebaseapp.com/guide/testing/internal-marble-tests) are very powerful, but at the same time very complicated to learn and to reason about (IMO).
+[Marble tests](https://rxjs-dev.firebaseapp.com/guide/testing/internal-marble-tests) are very powerful, but at the same time can be very complicated to learn and to reason about for some people.
 
 You need to learn and understand `cold` and `hot` observables, `schedulers` and to learn a new syntax just to test a simple observable chain.
 
 More complex observable chains tests get even harder to read.
 
-That's why this library was created - to present another alternative to marble tests, which I believe is cleaner and easier to understand and to implement.
+That's why this library was created - to present an alternative to marble tests, which we believe is cleaner and easier to understand and to use.
 
 ### How observer spies are cleaner?
 
