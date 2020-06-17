@@ -45,6 +45,19 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "katharinakoal",
+      "name": "Katharina Koal",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/17751573?v=4",
+      "profile": "https://github.com/katharinakoal",
+      "contributions": [
+        "code",
+        "test",
+        "doc",
+        "ideas",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
