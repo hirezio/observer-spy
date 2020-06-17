@@ -7,8 +7,7 @@ A simple little class and a helper function that help make Observable testing a 
 [![Build Status](https://travis-ci.org/hirezio/observer-spy.svg?branch=master)](https://travis-ci.org/hirezio/observer-spy)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![codecov](https://img.shields.io/codecov/c/github/hirezio/observer-spy.svg)](https://codecov.io/gh/hirezio/observer-spy) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
-
+[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <div align="center">
@@ -336,12 +335,12 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="http://www.hirez.io/"><img src="https://avatars1.githubusercontent.com/u/1430726?v=4" width="100px;" alt=""/><br /><sub><b>Shai Reznik</b></sub></a><br /><a href="https://github.com/hirezio/observer-spy/commits?author=shairez" title="Code">💻</a> <a href="https://github.com/hirezio/observer-spy/commits?author=shairez" title="Tests">⚠️</a> <a href="#infra-shairez" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/hirezio/observer-spy/commits?author=shairez" title="Documentation">📖</a> <a href="#maintenance-shairez" title="Maintenance">🚧</a> <a href="https://github.com/hirezio/observer-spy/pulls?q=is%3Apr+reviewed-by%3Ashairez" title="Reviewed Pull Requests">👀</a> <a href="#ideas-shairez" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://www.codamit.dev"><img src="https://avatars0.githubusercontent.com/u/8522558?v=4" width="100px;" alt=""/><br /><sub><b>Edouard Bozon</b></sub></a><br /><a href="https://github.com/hirezio/observer-spy/commits?author=edbzn" title="Code">💻</a> <a href="https://github.com/hirezio/observer-spy/commits?author=edbzn" title="Tests">⚠️</a> <a href="https://github.com/hirezio/observer-spy/commits?author=edbzn" title="Documentation">📖</a> <a href="#ideas-edbzn" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/burkybang"><img src="https://avatars0.githubusercontent.com/u/927886?v=4" width="100px;" alt=""/><br /><sub><b>Adam Smith</b></sub></a><br /><a href="https://github.com/hirezio/observer-spy/commits?author=burkybang" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/katharinakoal"><img src="https://avatars3.githubusercontent.com/u/17751573?v=4" width="100px;" alt=""/><br /><sub><b>Katharina Koal</b></sub></a><br /><a href="https://github.com/hirezio/observer-spy/commits?author=katharinakoal" title="Code">💻</a> <a href="https://github.com/hirezio/observer-spy/commits?author=katharinakoal" title="Tests">⚠️</a> <a href="https://github.com/hirezio/observer-spy/commits?author=katharinakoal" title="Documentation">📖</a> <a href="#ideas-katharinakoal" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/hirezio/observer-spy/issues?q=author%3Akatharinakoal" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
-
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
