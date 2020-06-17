@@ -136,9 +136,11 @@ it('should spy on Observable errors', () => {
 });
 ```
 
-#### Quick Usage with `subscribeAndSpyOn(observable)`
+## Quick Usage with `subscribeAndSpyOn(observable)`
 
-You can also create an `ObserverSpy` and immediately subscribe to an observable with this simple helper function. Observer spies generated that way will provide an additional `unsubscribe()` method that you might want to call if your source observable does not complete or does not get terminated by an error while testing.
+You can also create an `ObserverSpy` and immediately subscribe to an observable with this simple helper function.
+Observer spies generated that way will provide an additional `unsubscribe()` method that you might want to call
+if your source observable does not complete or does not get terminated by an error while testing.
 
 **Example:**
 
@@ -148,13 +150,15 @@ import { subscribeAndSpyOn } from '@hirez_io/observer-spy';
 it('should immediately subscribe and spy on Observable ', () => {
   const fakeObservable = of('first', 'second', 'third');
 
-  // shorthand usage
-  expect(subscribeAndSpyOn(fakeObservable).getFirstValue()).toEqual('first');
-
-  // or get the observer spy
+  // get an "ObserverSpyWithSubscription"
   const observerSpy = subscribeAndSpyOn(fakeObservable);
   // and optionally unsubscribe
   observerSpy.unsubscribe();
+
+  expect(observerSpy.getFirstValue()).toEqual('first');
+
+  // or use the shorthand version:
+  expect(subscribeAndSpyOn(fakeObservable).getFirstValue()).toEqual('first');
 });
 ```
 
