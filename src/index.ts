@@ -1,2 +1,2 @@
 export { ObserverSpy } from './observer-spy';
-export { subscribeAndSpyOn } from './subscribe-and-spy-on';
+export { subscribeAndSpyOn, ObserverSpyWithSubscription } from './subscribe-and-spy-on';

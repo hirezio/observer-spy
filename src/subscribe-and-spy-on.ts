@@ -5,7 +5,7 @@ export function subscribeAndSpyOn<T>(observableUnderTest: Observable<T>) {
   return new ObserverSpyWithSubscription(observableUnderTest);
 }
 
-class ObserverSpyWithSubscription<T> extends ObserverSpy<T> {
+export class ObserverSpyWithSubscription<T> extends ObserverSpy<T> {
   public subscription = new Subscription();
 
   constructor(observableUnderTest: Observable<T>) {
