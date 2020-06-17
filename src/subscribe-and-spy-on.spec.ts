@@ -1,6 +1,6 @@
-import { subscribeAndSpyOn } from './subscribe-and-spy-on';
 import { Observable, Subject } from 'rxjs';
 import { ObserverSpy } from './observer-spy';
+import { subscribeAndSpyOn } from './subscribe-and-spy-on';
 
 describe('subscribeAndSpyOn', () => {
   it('should return an ObserverSpy with unsubscribe method', () => {
