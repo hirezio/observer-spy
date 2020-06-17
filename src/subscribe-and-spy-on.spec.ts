@@ -1,15 +1,7 @@
-import { Observable, Subject } from 'rxjs';
-import { ObserverSpy } from './observer-spy';
+import { Subject } from 'rxjs';
 import { subscribeAndSpyOn } from './subscribe-and-spy-on';
 
 describe('subscribeAndSpyOn', () => {
-  it('should return an ObserverSpy with unsubscribe method', () => {
-    const observerSpy = subscribeAndSpyOn(new Observable());
-
-    expect(observerSpy).toBeInstanceOf(ObserverSpy);
-    expect(observerSpy.unsubscribe).toBeInstanceOf(Function);
-  });
-
   it('should match with given subscription points', () => {
     const fakeSubject = new Subject<number>();
     fakeSubject.next(1);
