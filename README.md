@@ -8,7 +8,8 @@ A simple little class and a helper function that help make Observable testing a 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![codecov](https://img.shields.io/codecov/c/github/hirezio/observer-spy.svg)](https://codecov.io/gh/hirezio/observer-spy) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-3-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END --> 
+
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <div align="center">
   <a href="http://testangular.com/?utm_source=github&utm_medium=link&utm_campaign=observer-spy">
@@ -132,6 +133,32 @@ it('should spy on Observable errors', () => {
   expect(observerSpy.receivedError()).toBe(true);
 
   expect(observerSpy.getError()).toEqual('FAKE ERROR');
+});
+```
+
+## Quick Usage with `subscribeAndSpyOn(observable)`
+
+You can also create an `ObserverSpy` and immediately subscribe to an observable with this simple helper function.
+Observer spies generated that way will provide an additional `unsubscribe()` method that you might want to call
+if your source observable does not complete or does not get terminated by an error while testing.
+
+**Example:**
+
+```js
+import { subscribeAndSpyOn } from '@hirez_io/observer-spy';
+
+it('should immediately subscribe and spy on Observable ', () => {
+  const fakeObservable = of('first', 'second', 'third');
+
+  // get an "ObserverSpyWithSubscription"
+  const observerSpy = subscribeAndSpyOn(fakeObservable);
+  // and optionally unsubscribe
+  observerSpy.unsubscribe();
+
+  expect(observerSpy.getFirstValue()).toEqual('first');
+
+  // or use the shorthand version:
+  expect(subscribeAndSpyOn(fakeObservable).getFirstValue()).toEqual('first');
 });
 ```
 
@@ -314,6 +341,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
