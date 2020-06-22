@@ -1,82 +1,97 @@
 import { Observer } from 'rxjs';
 
-export interface ObserverState {
-  nextCalled: boolean;
-  errorCalled: boolean;
-  completeCalled: boolean;
+export interface ObserverState<T> {
+  values: T[];
+  called: {
+    next: boolean;
+    error: boolean;
+    complete: boolean;
+  };
   errorValue: any;
-  onCompleteCallback: (() => void) | undefined;
 }
 
-export class ObserverSpy<T> implements Observer<T> {
-  private onNextValues: T[] = [];
+export type CompletionCallback = (spy: ObserverSpy<any>) => void;
+const NOOP = () => {};
 
-  private observerState: ObserverState = {
-    nextCalled: false,
-    errorCalled: false,
-    completeCalled: false,
+export class ObserverSpy<T> implements Observer<T> {
+  private isLocked = false;
+  private _state: ObserverState<T> = {
+    values: [],
     errorValue: undefined,
-    onCompleteCallback: undefined,
+    called: {
+      next: false,
+      error: false,
+      complete: false,
+    },
   };
 
+  constructor(private onCompleteCallback: CompletionCallback = NOOP) {}
+
+  // *************************************************
+  // Observer API
+  // *************************************************
+
   next(value: T): void {
-    this.onNextValues.push(value);
-    this.observerState.nextCalled = true;
+    if (!this.isLocked) {
+      this._state.values.push(value);
+      this._state.called.next = true;
+    }
   }
 
   error(errorVal: any): void {
-    this.observerState.errorValue = errorVal;
-    this.observerState.errorCalled = true;
+    if (!this.isLocked) {
+      this._state.errorValue = errorVal;
+      this._state.called.error = true;
+
+      this.complete();
+    }
   }
 
   complete(): void {
-    this.observerState.completeCalled = true;
-    if (this.observerState.onCompleteCallback) {
-      this.observerState.onCompleteCallback();
-    }
+    this._state.called.complete = true;
+    this.onCompleteCallback(this);
   }
 
-  onComplete(callback: () => void) {
-    if (this.observerState.completeCalled) {
-      callback();
-      return;
-    }
-    this.observerState.onCompleteCallback = callback;
+  // *************************************************
+  // Public API
+  // *************************************************
+
+  /**
+   * Publish read-only snapshot of current state
+   */
+  get state(): ObserverState<T> {
+    return {
+      ...this._state,
+      values: [...this._state.values],
+    };
   }
 
-  getValuesLength(): number {
-    return this.onNextValues.length;
+  get values(): T[] {
+    return this._state.values;
   }
 
-  getValues(): any[] {
-    return this.onNextValues;
+  get hasValues(): boolean {
+    return this._state.values.length > 0;
   }
 
-  getValueAt(index: number): T {
-    return this.onNextValues[index];
+  get isComplete(): boolean {
+    return this._state.called.complete;
   }
 
-  getFirstValue(): T {
-    return this.onNextValues[0];
+  readFirst(): T | undefined {
+    return this.hasValues ? this._state.values[0] : undefined;
   }
 
-  getLastValue(): T | undefined {
-    return this.onNextValues[this.onNextValues.length - 1];
+  readLast(): T | undefined {
+    return this.hasValues ? this._state.values[this._state.values.length - 1] : undefined;
   }
 
-  receivedNext(): boolean {
-    return this.observerState.nextCalled;
-  }
-
-  getError(): any {
-    return this.observerState.errorValue;
-  }
-
-  receivedError(): boolean {
-    return this.observerState.errorCalled;
-  }
-
-  receivedComplete(): boolean {
-    return this.observerState.completeCalled;
+  /**
+   * Freeze the spy from all future mutations.
+   * This feature allows the Spy to be locked for future
+   * inspection.
+   */
+  freeze(lockActive = true) {
+    this.isLocked = lockActive;
   }
 }
