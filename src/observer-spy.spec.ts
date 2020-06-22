@@ -1,126 +1,126 @@
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of, throwError, Subscription, from } from 'rxjs';
+import { TestScheduler } from 'rxjs/testing';
 import { delay } from 'rxjs/operators';
-import { ObserverSpy } from './observer-spy';
 
-describe('ObserverSpy', () => {
+import { ObserverSpy, CompletionCallback } from './observer-spy';
+
+describe('Observer-Spy', () => {
   describe(`GIVEN observable emits 3 values and completes
             WHEN subscribing`, () => {
-    function getObservableWith3Values() {
-      const observerSpy: ObserverSpy<string> = new ObserverSpy();
-      const fakeValues: any[] = ['first', 'second', 'third'];
-      const fakeObservable: Observable<string> = of(...fakeValues);
-
-      return {
-        observerSpy,
-        fakeValues,
-        fakeObservable,
-      };
-    }
-
     it('should set receivedNext to true', () => {
-      const { observerSpy, fakeObservable } = getObservableWith3Values();
+      const [oSpy, , , disconnect] = makeObservableAndSpy();
 
-      fakeObservable.subscribe(observerSpy).unsubscribe();
-
-      expect(observerSpy.receivedNext()).toBe(true);
+      disconnect();
+      expect(oSpy.state.called.next).toBe(true);
     });
 
     it('should return the right values', () => {
-      const { observerSpy, fakeObservable, fakeValues } = getObservableWith3Values();
+      const [oSpy, , list, disconnect] = makeObservableAndSpy();
+      disconnect(); // disconnect and freeze spy
 
-      fakeObservable.subscribe(observerSpy).unsubscribe();
-
-      expect(observerSpy.getValues()).toEqual(fakeValues);
-    });
-
-    it('should return the values length of 3', () => {
-      const { observerSpy, fakeObservable } = getObservableWith3Values();
-
-      fakeObservable.subscribe(observerSpy).unsubscribe();
-
-      expect(observerSpy.getValuesLength()).toEqual(3);
+      expect(oSpy.values).toEqual(list);
     });
 
     it('should be able to return the correct first value', () => {
-      const { observerSpy, fakeObservable } = getObservableWith3Values();
+      const [oSpy, , list, disconnect] = makeObservableAndSpy();
+      disconnect();
 
-      fakeObservable.subscribe(observerSpy).unsubscribe();
-
-      expect(observerSpy.getFirstValue()).toEqual('first');
+      expect(oSpy.readFirst()).toEqual(list[0]);
     });
 
     it('should be able to return the correct value at any index', () => {
-      const { observerSpy, fakeObservable } = getObservableWith3Values();
+      const [oSpy, , list, disconnect] = makeObservableAndSpy();
+      disconnect();
 
-      fakeObservable.subscribe(observerSpy).unsubscribe();
-
-      expect(observerSpy.getValueAt(1)).toEqual('second');
+      expect(oSpy.values[1]).toEqual(list[1]);
     });
 
     it('should be able to return the correct last value', () => {
-      const { observerSpy, fakeObservable } = getObservableWith3Values();
+      const [oSpy, , list, disconnect] = makeObservableAndSpy();
+      disconnect();
 
-      fakeObservable.subscribe(observerSpy).unsubscribe();
-
-      expect(observerSpy.getLastValue()).toEqual('third');
+      expect(oSpy.readLast()).toEqual(list[2]);
     });
 
     it('should know whether it got a "complete" notification', () => {
-      const { observerSpy, fakeObservable } = getObservableWith3Values();
+      const [oSpy, , , disconnect] = makeObservableAndSpy();
+      disconnect();
 
-      fakeObservable.subscribe(observerSpy).unsubscribe();
-
-      expect(observerSpy.receivedComplete()).toBe(true);
+      expect(oSpy.state.called.complete).toBe(true);
     });
 
     it('should be able to call a callback when it completes synchronously ', (done) => {
-      const { observerSpy, fakeObservable } = getObservableWith3Values();
-
-      fakeObservable.subscribe(observerSpy);
-
-      observerSpy.onComplete(() => {
-        expect(observerSpy.receivedComplete()).toBe(true);
+      const onComplete: CompletionCallback = (spy: ObserverSpy<any>) => {
+        expect(spy.state.called.complete).toBe(true);
         done();
-      });
+      };
+
+      makeObservableAndSpy(onComplete);
     });
 
     it('should be able to call a callback when it completes asynchronously', (done) => {
-      const { observerSpy, fakeObservable } = getObservableWith3Values();
-
-      fakeObservable.pipe(delay(1)).subscribe(observerSpy);
-
-      observerSpy.onComplete(() => {
-        expect(observerSpy.receivedComplete()).toBe(true);
+      const autoSubscribe = false;
+      const onComplete: CompletionCallback = (spy: ObserverSpy<any>) => {
+        expect(spy.state.called.complete).toBe(true);
         done();
+      };
+
+      makeTestScheduler().run(({ flush }) => {
+        const [oSpy, source$] = makeObservableAndSpy(onComplete, autoSubscribe);
+        const subscription = source$.pipe(delay(1)).subscribe(oSpy);
+
+        flush();
+        subscription.unsubscribe();
       });
     });
   });
 
-  describe('GIVEN observable throws WHEN subscribing', () => {
-    function getThrowingObservable() {
-      const observerSpy: ObserverSpy<string> = new ObserverSpy();
+  describe('with an observable that throws Error', () => {
+    function getThrowingObservable(): [ObserverSpy<string>, Observable<string>] {
+      const oSpy: ObserverSpy<string> = new ObserverSpy();
       const throwingObservable: Observable<string> = throwError('FAKE ERROR');
 
-      return {
-        observerSpy,
-        throwingObservable,
-      };
+      return [oSpy, throwingObservable];
     }
 
     it('should know whether it got an "error" notification', () => {
-      const { observerSpy, throwingObservable } = getThrowingObservable();
+      const [oSpy, source$] = getThrowingObservable();
 
-      throwingObservable.subscribe(observerSpy).unsubscribe();
-
-      expect(observerSpy.receivedError()).toBe(true);
+      source$.subscribe(oSpy).unsubscribe();
+      expect(oSpy.state.called.error).toBe(true);
     });
 
     it('should return the error object it received', () => {
-      const { observerSpy, throwingObservable } = getThrowingObservable();
+      const [oSpy, source$] = getThrowingObservable();
 
-      throwingObservable.subscribe(observerSpy).unsubscribe();
-
-      expect(observerSpy.getError()).toEqual('FAKE ERROR');
+      source$.subscribe(oSpy).unsubscribe();
+      expect(oSpy.state.errorValue).toEqual('FAKE ERROR');
     });
   });
 });
+
+type Testables = [ObserverSpy<string>, Observable<string>, string[], () => void];
+
+function makeObservableAndSpy(
+  onComplete?: CompletionCallback,
+  autoSubscribe = true
+): Testables {
+  let subscription: Subscription;
+
+  const oSpy: ObserverSpy<string> = new ObserverSpy(onComplete);
+  const list: any[] = ['first', 'second', 'third'];
+  const source$: Observable<string> = from(list);
+  const dispose = () => subscription && subscription.unsubscribe();
+
+  if (autoSubscribe) {
+    subscription = source$.subscribe(oSpy);
+  }
+
+  return [oSpy, source$, list, dispose];
+}
+
+function makeTestScheduler() {
+  return new TestScheduler((actual, expected) => {
+    expect(actual).toEqual(expected);
+  });
+}
