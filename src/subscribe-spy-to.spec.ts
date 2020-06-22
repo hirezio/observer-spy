@@ -1,11 +1,11 @@
 import { Subject } from 'rxjs';
-import { subscribeAndSpyOn } from './subscribe-and-spy-on';
+import { subscribeSpyTo } from './subscribe-spy-to';
 
-describe('subscribeAndSpyOn', () => {
+describe('subscribeSpyTo', () => {
   it('should match with given subscription points', () => {
     const fakeSubject = new Subject<number>();
     fakeSubject.next(1);
-    const observerSpy = subscribeAndSpyOn(fakeSubject.asObservable());
+    const observerSpy = subscribeSpyTo(fakeSubject.asObservable());
 
     fakeSubject.next(2);
     fakeSubject.next(3);

@@ -3,9 +3,9 @@ import { delay } from 'rxjs/operators';
 import { ObserverSpy } from './observer-spy';
 
 describe('ObserverSpy', () => {
-  describe(`GIVEN observable emits 3 values and completes
+  describe(`GIVEN the observable emits 3 values and completes
             WHEN subscribing`, () => {
-    function getObservableWith3Values() {
+    function getSpyAndObservableWith3Values() {
       const observerSpy: ObserverSpy<string> = new ObserverSpy();
       const fakeValues: any[] = ['first', 'second', 'third'];
       const fakeObservable: Observable<string> = of(...fakeValues);
@@ -18,7 +18,7 @@ describe('ObserverSpy', () => {
     }
 
     it('should set receivedNext to true', () => {
-      const { observerSpy, fakeObservable } = getObservableWith3Values();
+      const { observerSpy, fakeObservable } = getSpyAndObservableWith3Values();
 
       fakeObservable.subscribe(observerSpy).unsubscribe();
 
@@ -26,7 +26,11 @@ describe('ObserverSpy', () => {
     });
 
     it('should return the right values', () => {
-      const { observerSpy, fakeObservable, fakeValues } = getObservableWith3Values();
+      const {
+        observerSpy,
+        fakeObservable,
+        fakeValues,
+      } = getSpyAndObservableWith3Values();
 
       fakeObservable.subscribe(observerSpy).unsubscribe();
 
@@ -34,7 +38,7 @@ describe('ObserverSpy', () => {
     });
 
     it('should return the values length of 3', () => {
-      const { observerSpy, fakeObservable } = getObservableWith3Values();
+      const { observerSpy, fakeObservable } = getSpyAndObservableWith3Values();
 
       fakeObservable.subscribe(observerSpy).unsubscribe();
 
@@ -42,7 +46,7 @@ describe('ObserverSpy', () => {
     });
 
     it('should be able to return the correct first value', () => {
-      const { observerSpy, fakeObservable } = getObservableWith3Values();
+      const { observerSpy, fakeObservable } = getSpyAndObservableWith3Values();
 
       fakeObservable.subscribe(observerSpy).unsubscribe();
 
@@ -50,7 +54,7 @@ describe('ObserverSpy', () => {
     });
 
     it('should be able to return the correct value at any index', () => {
-      const { observerSpy, fakeObservable } = getObservableWith3Values();
+      const { observerSpy, fakeObservable } = getSpyAndObservableWith3Values();
 
       fakeObservable.subscribe(observerSpy).unsubscribe();
 
@@ -58,7 +62,7 @@ describe('ObserverSpy', () => {
     });
 
     it('should be able to return the correct last value', () => {
-      const { observerSpy, fakeObservable } = getObservableWith3Values();
+      const { observerSpy, fakeObservable } = getSpyAndObservableWith3Values();
 
       fakeObservable.subscribe(observerSpy).unsubscribe();
 
@@ -66,7 +70,7 @@ describe('ObserverSpy', () => {
     });
 
     it('should know whether it got a "complete" notification', () => {
-      const { observerSpy, fakeObservable } = getObservableWith3Values();
+      const { observerSpy, fakeObservable } = getSpyAndObservableWith3Values();
 
       fakeObservable.subscribe(observerSpy).unsubscribe();
 
@@ -74,7 +78,7 @@ describe('ObserverSpy', () => {
     });
 
     it('should be able to call a callback when it completes synchronously', (done) => {
-      const { observerSpy, fakeObservable } = getObservableWith3Values();
+      const { observerSpy, fakeObservable } = getSpyAndObservableWith3Values();
 
       fakeObservable.subscribe(observerSpy);
 
@@ -85,7 +89,7 @@ describe('ObserverSpy', () => {
     });
 
     it('should return a resolved promise when it completes synchronously', async () => {
-      const { observerSpy, fakeObservable } = getObservableWith3Values();
+      const { observerSpy, fakeObservable } = getSpyAndObservableWith3Values();
 
       fakeObservable.subscribe(observerSpy);
 
@@ -94,7 +98,7 @@ describe('ObserverSpy', () => {
     });
 
     it('should be able to call a callback when it completes asynchronously', (done) => {
-      const { observerSpy, fakeObservable } = getObservableWith3Values();
+      const { observerSpy, fakeObservable } = getSpyAndObservableWith3Values();
 
       fakeObservable.pipe(delay(1)).subscribe(observerSpy);
 
@@ -105,7 +109,7 @@ describe('ObserverSpy', () => {
     });
 
     it('should return a resolved promise when it completes asynchronously', async () => {
-      const { observerSpy, fakeObservable } = getObservableWith3Values();
+      const { observerSpy, fakeObservable } = getSpyAndObservableWith3Values();
 
       fakeObservable.pipe(delay(1)).subscribe(observerSpy);
 

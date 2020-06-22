@@ -1,70 +1,103 @@
-# Contributing to observer-spy
+# Contribution Guidelines
 
 We would love for you to contribute to this project.
 As a contributor, here are the guidelines we would like you to follow:
 
-## 1. Be Kind - Code of Conduct
+## Be Kind - Code of Conduct
 
-Help us keep this project open and inclusive. Please read and follow our [Code of Conduct](CODE_OF_CONDUCT.md)
+Please read and follow our [Code of Conduct](CODE_OF_CONDUCT.md) to help us keep this project open and inclusive.
 
-## 2. Submitting an Issue
+<br/>
 
-You can file new issues by selecting from our [new issue templates](https://github.com/hirezio/observer-spy/issues/new/choose) and filling out the issue template.
+## Found a bug? Want a feature? - Submit an Issue
 
-## 3. Submitting a Pull Request (PR)
+[Choose an issue template](https://github.com/hirezio/observer-spy/issues/new/choose) to file a bug report / feature request.
 
-Before you submit your Pull Request (PR) consider the following guidelines:
 
-1. Search [GitHub](https://github.com/hirezio/observer-spy/pulls) for an open or closed PR
-   that relates to your submission. You don't want to duplicate effort.
-1. Be sure that **there is an issue** describes the problem you're fixing, or documents the design for the feature you'd like to add.
-   Discussing the design up front helps to ensure that we're ready to accept your work.
+<br/>
 
-1. Fork the this repo.
-1. Make your changes in a new git branch:
+## Ready to contribute a Pull Request (PR)?
 
-   ```shell
-   git checkout -b my-fix-branch master
-   ```
+<br/>
 
-1. Create your patch, **including appropriate test cases**.
-1. Run `yarn test` to check if all the tests are passing.
-   and ensure that all tests pass.
-1. Commit your changes using:
+### ▶ 1. First - [Search this repo for existing PRs](https://github.com/hirezio/observer-spy/pulls) !
 
-   ```shell
-   yarn commit
-   ```
+Try to find an open or closed PR that relates to the change you want to introduce.
 
-   This will create a descriptive commit message that follows our
-   [commit message conventions](#commit-message-format).
-   This is necessary to generate meaningful release notes automatically.
+<br/>
 
-1. Push your branch to GitHub:
+### ▶ 2. **Before you start coding - [find](https://github.com/hirezio/observer-spy/issues) / [create an issue](https://github.com/hirezio/observer-spy/issues/new/choose)**
 
-   ```shell
-   git push origin my-fix-branch
-   ```
+**Make sure there's an issue** describing the problem you're fixing, or documents the design for the feature you'd like to add.
+Discussing the design up front helps to ensure that we're ready to accept your work.
 
-1. In GitHub, send a pull request to `observer-spy:master`.
+**Don't waste your time working on code before you got a 👍 in an issue comment.**
 
-- If we suggest changes then:
+<br/>
 
-  - Make the required updates.
-  - Re-run the tests to ensure tests are still passing.
-  - Rebase your branch and force push to your GitHub repository (this will update your Pull Request):
 
-    ```shell
-    git rebase master -i
-    git push -f
-    ```
+### ▶ 3. Fork the this repo and create a branch.
 
-That's it! Thank you for your contribution!
+Make your changes in a new git branch:
 
-#### After your pull request is merged
+```shell
+git checkout -b my-fix-branch master
+```
 
-After your pull request is merged, you can safely delete your branch and pull the changes
-from the main (upstream) repository:
+<br/>
+
+### ▶ 4. Make sure you add / modify tests
+
+Run `yarn test:full` to make sure there aren't any errors
+
+<br/>
+
+### ▶ 5. Commit your changes using commitizen:
+
+Instead of `git commit` use the following command:
+
+```shell
+yarn commit
+```
+
+It will then ask you a bunch of questions.
+
+This will create a descriptive commit message that follows the
+[Angular commit message convention](#commit-message-format).
+
+This is necessary to generate meaningful release notes / CHANGELOG automatically.
+
+<br/>
+
+### ▶ 6. Push your branch to GitHub:
+
+```shell
+git push origin my-fix-branch
+```
+
+
+### ▶ 7. Create a PR
+
+In GitHub, create a pull request for `hirezio/observer-spy:master`.
+
+If you need to update your PR for some reason -
+
+- Make the required updates.
+
+- Re-run the tests to ensure tests are still passing `yarn test:full`
+
+- Rebase your branch and force push to your GitHub repository (this will update your Pull Request):
+
+  ```shell
+  git rebase master -i
+  git push -f
+  ```
+
+<br/>
+
+### ▶ 8. After your PR is merged - delete your branches
+
+After your pull request is merged, you can safely delete your branch and pull the changes from the main (upstream) repository:
 
 - Delete the remote branch on GitHub either through the GitHub web UI or your local shell as follows:
 
@@ -90,11 +123,9 @@ from the main (upstream) repository:
   git pull --ff upstream master
   ```
 
-<hr>
+<br/>
 
-This doc is based on [Angular's contributing document](https://github.com/angular/angular/blob/master/CONTRIBUTING.md)
+### ▶ 9. That's it! Thank you for your contribution! 🙏💓
 
-[coc]: CODE_OF_CONDUCT.md
+
 [commit-message-format]: https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit#
-[github]: https://github.com/hirezio/observer-spy
-[stackblitz]: https://stackblitz.com/

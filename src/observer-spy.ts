@@ -1,9 +1,9 @@
 import { Observer } from 'rxjs';
 
 export interface ObserverState {
-  nextCalled: boolean;
-  errorCalled: boolean;
-  completeCalled: boolean;
+  nextWasCalled: boolean;
+  errorWasCalled: boolean;
+  completeWasCalled: boolean;
   errorValue: any;
   onCompleteCallback: (() => void) | undefined;
 }
@@ -11,45 +11,45 @@ export interface ObserverState {
 export class ObserverSpy<T> implements Observer<T> {
   private onNextValues: T[] = [];
 
-  private observerState: ObserverState = {
-    nextCalled: false,
-    errorCalled: false,
-    completeCalled: false,
+  private state: ObserverState = {
+    nextWasCalled: false,
+    errorWasCalled: false,
+    completeWasCalled: false,
     errorValue: undefined,
     onCompleteCallback: undefined,
   };
 
   next(value: T): void {
     this.onNextValues.push(value);
-    this.observerState.nextCalled = true;
+    this.state.nextWasCalled = true;
   }
 
   error(errorVal: any): void {
-    this.observerState.errorValue = errorVal;
-    this.observerState.errorCalled = true;
+    this.state.errorValue = errorVal;
+    this.state.errorWasCalled = true;
   }
 
   complete(): void {
-    this.observerState.completeCalled = true;
-    if (this.observerState.onCompleteCallback) {
-      this.observerState.onCompleteCallback();
+    this.state.completeWasCalled = true;
+    if (this.state.onCompleteCallback) {
+      this.state.onCompleteCallback();
     }
   }
 
   onComplete(): Promise<void>;
   onComplete(callback: () => void): void;
   onComplete(callback?: () => void) {
-    if (this.observerState.completeCalled) {
+    if (this.state.completeWasCalled) {
       return callback ? callback() : Promise.resolve();
     }
 
     if (callback) {
-      this.observerState.onCompleteCallback = callback;
+      this.state.onCompleteCallback = callback;
       return;
     }
 
     return new Promise((resolve) => {
-      this.observerState.onCompleteCallback = resolve;
+      this.state.onCompleteCallback = resolve;
     });
   }
 
@@ -74,18 +74,18 @@ export class ObserverSpy<T> implements Observer<T> {
   }
 
   receivedNext(): boolean {
-    return this.observerState.nextCalled;
+    return this.state.nextWasCalled;
   }
 
   getError(): any {
-    return this.observerState.errorValue;
+    return this.state.errorValue;
   }
 
   receivedError(): boolean {
-    return this.observerState.errorCalled;
+    return this.state.errorWasCalled;
   }
 
   receivedComplete(): boolean {
-    return this.observerState.completeCalled;
+    return this.state.completeWasCalled;
   }
 }
