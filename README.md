@@ -229,6 +229,8 @@ it('should work with observables', async () => {
   expect(observerSpy.getLastValue()).toEqual('fake data');
 });
 
+// ===============================================================================
+
 it('should work with promises', async () => {
   const observerSpy: ObserverSpy<string> = new ObserverSpy();
 
@@ -245,6 +247,8 @@ it('should work with promises', async () => {
 
   expect(observerSpy.getLastValue()).toEqual('fake data');
 });
+
+// ===============================================================================
 
 it('should work with promises and "done()"', (done) => {
   const observerSpy: ObserverSpy<string> = new ObserverSpy();
@@ -295,6 +299,8 @@ it(
     expect(observerSpy.getValues()).toEqual(VALUES);
   })
 );
+
+// ===============================================================================
 
 it(
   'should handle be able to deal with done functionality as well',
