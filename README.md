@@ -31,6 +31,8 @@ This library:
 
 ✅ **Makes testing advanced observables easy**
 
+(The idea was inspired by [Reactive Programming with RxJava](https://books.google.co.il/books?id=y4Y1DQAAQBAJ))
+
 ## Installation
 
 ```
