@@ -58,6 +58,18 @@
         "ideas",
         "bug"
       ]
+    },
+    {
+      "login": "ThomasBurleson",
+      "name": "Thomas Burleson",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/210413?v=4",
+      "profile": "http://www.linkedin.com/in/thomasburleson",
+      "contributions": [
+        "code",
+        "test",
+        "doc",
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
