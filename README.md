@@ -39,12 +39,12 @@ This library makes RxJS Observables testing easy!
   - [Testing Sync Logic](#testing-sync-logic)
 
   - [Testing Async Logic](#testing-async-logic)
-      - [▶ RxJS  + Angular: use `fakeAsync`](#%E2%96%B6-rxjs---angular-use-fakeasync)
+      - [▶ RxJS  + Angular: use `fakeAsync`](#-rxjs---angular-use-fakeasync)
 
-      - [▶ RxJS + Promises: use `async` + `await`](#%E2%96%B6-rxjs--promises-use-async--await)
+      - [▶ RxJS + Promises: use `async` + `await`](#-rxjs--promises-use-async--await)
     
-      - [▶ RxJS Timers / Animations: use `fakeTime`](#%E2%96%B6-rxjs-timers--animations-use-faketime)
-      - [▶ RxJS + _AJAX_ calls:](#%E2%96%B6-rxjs--_ajax_-calls)
+      - [▶ RxJS Timers / Animations: use `fakeTime`](#-rxjs-timers--animations-use-faketime)
+      - [▶ RxJS + _AJAX_ calls:](#-rxjs--ajax-calls)
   
 
 - [🧠 Wanna become a PRO Observables tester?](#-wanna-become-a-pro-observables-tester)
