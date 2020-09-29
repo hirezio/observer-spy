@@ -1,4 +1,4 @@
-import { Subject } from 'rxjs';
+import { Subject, throwError } from 'rxjs';
 import { subscribeSpyTo } from './subscribe-spy-to';
 
 describe('subscribeSpyTo', () => {
@@ -16,5 +16,11 @@ describe('subscribeSpyTo', () => {
 
     expect(observerSpy.getFirstValue()).toBe(2);
     expect(observerSpy.getLastValue()).toBe(3);
+  });
+
+  it('should respect "expectErrors" configuration', () => {
+    const observerSpy = subscribeSpyTo(throwError('FAKE ERROR'), { expectErrors: true });
+
+    expect(observerSpy.getError()).toBe('FAKE ERROR');
   });
 });

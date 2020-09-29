@@ -1,11 +1,12 @@
 import { Subscription, Observable, Unsubscribable } from 'rxjs';
 import { ObserverSpy } from '.';
+import { ObserverSpyConfig } from './observer-spy';
 
 export class SubscriberSpy<T> extends ObserverSpy<T> implements Unsubscribable {
   public subscription = new Subscription();
 
-  constructor(observableUnderTest: Observable<T>) {
-    super();
+  constructor(observableUnderTest: Observable<T>, config?: ObserverSpyConfig) {
+    super(config);
     this.subscription.add(observableUnderTest.subscribe(this));
   }
 

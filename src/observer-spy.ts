@@ -5,7 +5,12 @@ export interface ObserverState {
   errorWasCalled: boolean;
   completeWasCalled: boolean;
   errorValue: any;
+  errorIsExpected: boolean;
   onCompleteCallback: (() => void) | undefined;
+}
+
+export interface ObserverSpyConfig {
+  expectErrors: boolean;
 }
 
 export class ObserverSpy<T> implements Observer<T> {
@@ -17,7 +22,14 @@ export class ObserverSpy<T> implements Observer<T> {
     completeWasCalled: false,
     errorValue: undefined,
     onCompleteCallback: undefined,
+    errorIsExpected: false,
   };
+
+  constructor(config?: ObserverSpyConfig) {
+    if (config && config.expectErrors) {
+      this.expectErrors();
+    }
+  }
 
   next(value: T): void {
     this.onNextValues.push(value);
@@ -25,6 +37,9 @@ export class ObserverSpy<T> implements Observer<T> {
   }
 
   error(errorVal: any): void {
+    if (!this.state.errorIsExpected) {
+      throw errorVal;
+    }
     this.state.errorValue = errorVal;
     this.state.errorWasCalled = true;
   }
@@ -51,6 +66,10 @@ export class ObserverSpy<T> implements Observer<T> {
     return new Promise((resolve) => {
       this.state.onCompleteCallback = resolve;
     });
+  }
+
+  expectErrors() {
+    this.state.errorIsExpected = true;
   }
 
   getValuesLength(): number {

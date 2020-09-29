@@ -1,9 +1,13 @@
 import { Observable } from 'rxjs';
 import { queueForAutoUnsubscribe } from './auto-unsubscribe';
 import { SubscriberSpy } from './subscriber-spy';
+import { ObserverSpyConfig } from './observer-spy';
 
-export function subscribeSpyTo<T>(observableUnderTest: Observable<T>) {
-  const spy = new SubscriberSpy(observableUnderTest);
+export function subscribeSpyTo<T>(
+  observableUnderTest: Observable<T>,
+  config?: ObserverSpyConfig
+) {
+  const spy = new SubscriberSpy(observableUnderTest, config);
   queueForAutoUnsubscribe(spy);
   return spy;
 }

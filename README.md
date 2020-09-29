@@ -209,13 +209,16 @@ it('should support async await for onComplete()', async () => {
 
 ### Spy on errors with `receivedError` and `getError`
 
+#### ⚠ You MUST configure `expectErrors` to catch errors!
+This 👆 is to avoid swallowing unexpected errors ([more details here](https://github.com/hirezio/observer-spy/issues/20))
+
 ```js
 
 it('should spy on Observable errors', () => {
 
   const fakeObservable = throwError('FAKE ERROR');
 
-  const observerSpy = subscribeSpyTo(fakeObservable);
+  const observerSpy = subscribeSpyTo(fakeObservable, {expectErrors: true});
 
   expect(observerSpy.receivedError()).toBe(true);
 
@@ -253,6 +256,25 @@ it('should spy on Observable values', () => {
   subscription.unsubscribe();
 
   expect(observerSpy.getValuesLength()).toEqual(3);
+
+});
+```
+
+If you need to spy on errors, make sure to set the `expectErrors` property:
+
+```js
+it('should spy on Observable errors', () => {
+  
+  const fakeObservable = throwError('OOPS');
+
+  const observerSpy = new ObserverSpy({expectErrors: true}); // <-- IMPORTANT
+
+  // BTW, this could also be set like this:
+  observerSpy.expectErrors(); // <-- ALTERNATIVE WAY TO SET IT
+
+  fakeObservable.subscribe(observerSpy);
+
+  expect(observerSpy.receivedError()).toBe(true);
 
 });
 ```

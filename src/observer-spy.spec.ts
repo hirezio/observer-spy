@@ -119,30 +119,41 @@ describe('ObserverSpy', () => {
   });
 
   describe('GIVEN observable throws WHEN subscribing', () => {
+    const FAKE_ERROR_MESSAGE = 'FAKE ERROR';
     function getThrowingObservable() {
-      const observerSpy: ObserverSpy<string> = new ObserverSpy();
-      const throwingObservable: Observable<string> = throwError('FAKE ERROR');
+      const throwingObservable: Observable<string> = throwError(FAKE_ERROR_MESSAGE);
 
       return {
-        observerSpy,
         throwingObservable,
       };
     }
 
-    it('should know whether it got an "error" notification', () => {
-      const { observerSpy, throwingObservable } = getThrowingObservable();
+    it('should throw the original error if "expectErrors" is NOT configured', () => {
+      const observerSpy: ObserverSpy<string> = new ObserverSpy();
+      try {
+        observerSpy.error(FAKE_ERROR_MESSAGE);
+      } catch (expectedError) {
+        expect(expectedError).toBe(FAKE_ERROR_MESSAGE);
+      }
+    });
+
+    it('should know whether it got an "error" notification if "expectErrors" is configured', () => {
+      const observerSpy: ObserverSpy<string> = new ObserverSpy();
+      observerSpy.expectErrors();
+      const { throwingObservable } = getThrowingObservable();
 
       throwingObservable.subscribe(observerSpy).unsubscribe();
 
       expect(observerSpy.receivedError()).toBe(true);
     });
 
-    it('should return the error object it received', () => {
-      const { observerSpy, throwingObservable } = getThrowingObservable();
+    it('should return the error object it received if "expectErrors" is configured', () => {
+      const observerSpy: ObserverSpy<string> = new ObserverSpy({ expectErrors: true });
+      const { throwingObservable } = getThrowingObservable();
 
       throwingObservable.subscribe(observerSpy).unsubscribe();
 
-      expect(observerSpy.getError()).toEqual('FAKE ERROR');
+      expect(observerSpy.getError()).toEqual(FAKE_ERROR_MESSAGE);
     });
   });
 });
