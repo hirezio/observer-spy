@@ -19,7 +19,43 @@ This library makes RxJS Observables testing easy!
   </a>
 </div>
 
+<br/>
 
+# Table of Contents
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+  - [Installation](#installation)
+  - [The Problem](#the-problem-testing-rxjs-observables-is-hard-)
+  - [The Solution](#the-solution-observer-spies-)
+- [Usage](#usage)
+  - [`subscribeSpyTo(observable)`](#const-observerspy--subscribespytoobservable)
+  - [`onComplete` (using `async` + `await`)](#wait-for-oncomplete-before-expecting-the-result-using-async--await)
+  - [Spying on Errors (`expectErrors`)](#spy-on-errors-with-receivederror-and-geterror)
+  - [Manually Creating Spies](#manually-using-new-observerspy)
+  - [Auto Unsubscribing](#auto-unsubscribing)
+  - [Testing Sync Logic](#testing-sync-logic)
+
+  - [Testing Async Logic](#testing-async-logic)
+      - [▶ RxJS  + Angular: use `fakeAsync`](#%E2%96%B6-rxjs---angular-use-fakeasync)
+
+      - [▶ RxJS + Promises: use `async` + `await`](#%E2%96%B6-rxjs--promises-use-async--await)
+    
+      - [▶ RxJS Timers / Animations: use `fakeTime`](#%E2%96%B6-rxjs-timers--animations-use-faketime)
+      - [▶ RxJS + _AJAX_ calls:](#%E2%96%B6-rxjs--_ajax_-calls)
+  
+
+- [🧠 Wanna become a PRO Observables tester?](#-wanna-become-a-pro-observables-tester)
+- [How to Contribute](#contributing)
+- [Code Of Conduct](#code-of-conduct)
+- [Contributors ✨](#contributors-)
+- [License](#license)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
+<br/>
 
 ## Installation
 
@@ -366,9 +402,9 @@ it('should run synchronously', () => {
 
 If you're **not using Angular** and have RxJS async operators like `delay` or `timeout` 
 
-Use `fakeTime` with `flush()` to simulate the passage of time ([detailed explanation](#-for-time-based-rxjs-code-timeouts--intervals--animations---use-faketime)) - 
+Use `fakeTime` with `flush()` to simulate the passage of time ([detailed explanation](#-rxjs-timers--animations-use-faketime)) - 
 
-[![image](https://user-images.githubusercontent.com/210413/85336618-83f92180-b4a4-11ea-800d-6bb275eeda45.png)](#-for-time-based-rxjs-code-timeouts--intervals--animations---use-faketime)
+[![image](https://user-images.githubusercontent.com/210413/85336618-83f92180-b4a4-11ea-800d-6bb275eeda45.png)](#-rxjs-timers--animations-use-faketime)
 
 
 <br/>
