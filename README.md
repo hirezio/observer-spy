@@ -10,15 +10,6 @@ This library makes RxJS Observables testing easy!
 [![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-<div align="center">
-  <a href="http://testangular.com/?utm_source=github&utm_medium=link&utm_campaign=observer-spy">
-    <img src="for-readme/test-angular.jpg"
-      alt="TestAngular.com - Free Angular Testing Workshop - The Roadmap to Angular Testing Mastery"
-      width="600"
-    />
-  </a>
-</div>
-
 <br/>
 
 # Table of Contents
@@ -103,6 +94,19 @@ An alternative which we believe is:
 * ✅ Makes observables tests **cleaner**
  
 <br/>
+
+### Here's what people had to say:
+
+![image](https://user-images.githubusercontent.com/1430726/95263162-0cbe8200-0836-11eb-9d78-45a7e64c38f7.png)
+
+---
+
+![image](https://user-images.githubusercontent.com/1430726/95263462-7dfe3500-0836-11eb-8aca-0d9283b2d66b.png)
+
+---
+
+<br/>
+
 
 ## Why Observer-Spy is easier?
 
@@ -523,6 +527,19 @@ Asynchronous REST calls (using axios, http, fetch, etc.) should not be tested in
 <br/>
 <br/>
 
+# Learn More:
+
+<div align="center">
+  <a href="http://testangular.com/?utm_source=github&utm_medium=link&utm_campaign=observer-spy">
+    <img src="for-readme/test-angular.jpg"
+      alt="TestAngular.com - Free Angular Testing Workshop - The Roadmap to Angular Testing Mastery"
+      width="600"
+    />
+  </a>
+</div>
+
+<br/>
+
 # 🧠 Wanna become a PRO Observables tester?
 
 In [Angular Class Testing In action](http://testangular.com/?utm_source=github&utm_medium=link&utm_campaign=observer-spy) course Shai Reznik goes over all the differences and show you how to use observer spies to test complex Observable chains with `switchMap`, `interval` etc...
@@ -571,8 +588,6 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
 
 <br/>
-
-
 
 
 ## License
