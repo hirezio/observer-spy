@@ -38,7 +38,19 @@ Discussing the design up front helps to ensure that we're ready to accept your w
 
 ### ▶ 3. Fork the this repo and create a branch.
 
-Make your changes in a new git branch:
+*  Hit that "Fork" button above (in this repo's github page).
+
+![image](https://user-images.githubusercontent.com/1430726/95460679-ec014400-097d-11eb-9a7a-93e0262d37d9.png)
+
+* git clone your fork 
+
+`git clone YOUR_FORK_URL`
+
+Get your url by from here 👇
+
+![image](https://user-images.githubusercontent.com/1430726/95461173-94afa380-097e-11eb-9568-dc986e050de6.png)
+
+* Create a new branch locally in your fork's repo
 
 ```shell
 git checkout -b my-fix-branch master
@@ -79,6 +91,10 @@ git push origin my-fix-branch
 ### ▶ 7. Create a PR
 
 In GitHub, create a pull request for `hirezio/observer-spy:master`.
+
+Make sure you check the following checkbox "Allow edits from maintainers" - 
+
+![image](https://user-images.githubusercontent.com/1430726/95461503-fbcd5800-097e-11eb-9b55-321d1ff0e6bb.png)
 
 If you need to update your PR for some reason -
 
