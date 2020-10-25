@@ -324,18 +324,25 @@ it('should spy on Observable errors', () => {
 
 # Auto Unsubscribing
 
+In order to save you the trouble of calling `unsubscribe` in each test, you can configure the library to auto unsubscribe from every observer you create with `subscribeSpyTo()`.
+
+
 ### ⚠ PAY ATTENTION: 
+
+* You should only call `autoUnsubscribe()` once per environment **(not manually after each test!)**. You do it in your testing environment setup files (like `jest.config.js` or `test.ts` in Angular).
 
 * This works **only with subscriptions created** using either `subscribeSpyTo()` or `queueForAutoUnsubscribe()`.
 
-* Requires a global `afterEach` function, so **it only works** with frameworks like **Jasmine**, **Mocha** and **Jest**.
+* Currently **it only works** with frameworks like **Jasmine**, **Mocha** and **Jest** (because they have a global `afterEach` function)
 
 
-## `autoUnsubscribe()`
+This library provide helper functions to help you configure this behavior - 
 
-In order to save you the trouble of calling `unsubscribe` in each test, you can configure the library to auto unsubscribe from every observer you create with `subscribeSpyTo()`.
+<br/>
 
-### Configuring Jest with `autoUnsubscribe`
+### ⚒ Configuring Jest with `setup-auto-unsubscribe.js`
+
+This requires Jest to be loaded and then calls `autoUnsubscribe()` which sets up a global / root `afterEach` function that unsubscribes from your observer spies.
 
 Add this to your jest configuration (i.e `jest.config.js`):
 
@@ -345,22 +352,29 @@ Add this to your jest configuration (i.e `jest.config.js`):
 }
 ```
 
-### Configuring Angular with `autoUnsubscribe`
+<br/>
 
-Add this to your `test.ts`
+### ⚒ Configuring Angular with `autoUnsubscribe`
+
+This will add a root level `afterEach()` once that auto unsubscribes observer spies. 
+
+Add this to your `test.ts` - 
 
 ```ts
+// test.ts
+// ~~~~~~~
+
 import { autoUnsubscribe } from '@hirez_io/observer-spy';
 
 autoUnsubscribe();
 
 ```
 
-### Manually adding a subscription with `queueForAutoUnsubscribe`
+<br/>
 
-## 
+### ⚒ Manually adding a subscription with `queueForAutoUnsubscribe`
 
-If you configured `autoUnsubscribe()` in your environment and want your manually created spies (via `new ObserverSpy()`) to be "auto unsubscribed" you can use `queueForAutoUnsubscribe(subscription)`.
+If you configured your environment to "autoUnsubscribe" and want your manually created spies (via `new ObserverSpy()`) to be "auto unsubscribed" as well, you can use `queueForAutoUnsubscribe(subscription)`.
 
 It accepts any `Unsubscribable` object which has an `unsubscribe()` method -
 
@@ -383,6 +397,8 @@ it('should spy on Observable values', () => {
 
 });
 ```
+
+This will ensure your manually created spies are auto unsubscribed at the end of each test.
 <br/>
 
 # Testing Sync Logic
