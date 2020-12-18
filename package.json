@@ -9,7 +9,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.com"
   },
   "scripts": {
     "clean": "rimraf dist",

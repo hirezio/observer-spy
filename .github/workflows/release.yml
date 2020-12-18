@@ -105,8 +105,14 @@ jobs:
           git config --global user.name '@hirezio'
           git config --global user.email 'hirezio@users.noreply.github.com'
 
+      - name: Check Authentication with Registry
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm whoami
+
       - name: Update Version and Publish to NPM
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: yarn semantic-release
