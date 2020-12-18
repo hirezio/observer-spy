@@ -25,6 +25,7 @@ This library makes RxJS Observables testing easy!
   - [`subscribeSpyTo(observable)`](#const-observerspy--subscribespytoobservable)
   - [`onComplete` (using `async` + `await`)](#wait-for-oncomplete-before-expecting-the-result-using-async--await)
   - [Spying on Errors (`expectErrors`)](#spy-on-errors-with-receivederror-and-geterror)
+  - [`onError` (using `async` + `await`)](#wait-for-onerror-before-expecting-the-result-using-async--await)
   - [Manually Creating Spies](#manually-using-new-observerspy)
   - [Auto Unsubscribing](#auto-unsubscribing)
   - [Testing Sync Logic](#testing-sync-logic)
@@ -232,6 +233,7 @@ it('should support async await for onComplete()', async () => {
 
   const observerSpy = subscribeSpyTo(fakeObservable);
 
+// 👇
   await observerSpy.onComplete(); // <-- the test will pause here until the observable is complete
 
   expect(observerSpy.receivedComplete()).toBe(true);
@@ -263,6 +265,26 @@ it('should spy on Observable errors', () => {
   expect(observerSpy.receivedError()).toBe(true);
 
   expect(observerSpy.getError()).toEqual('FAKE ERROR');
+});
+
+```
+
+<br/>
+
+### Wait for `onError` before expecting the result (using `async` + `await`)
+
+```js
+it('should support async await for onError()', async () => {
+  
+  const fakeObservable = throwError('FAKE ERROR');
+
+  const observerSpy = subscribeSpyTo(fakeObservable, {expectErrors: true});
+
+// 👇
+  await observerSpy.onError(); // <-- the test will pause here until the observer receive the error
+
+  expect(observerSpy.getError()).toEqual('FAKE ERROR');
+
 });
 
 ```

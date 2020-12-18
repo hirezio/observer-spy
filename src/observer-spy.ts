@@ -7,6 +7,7 @@ export interface ObserverState {
   errorValue: any;
   errorIsExpected: boolean;
   onCompleteCallback: (() => void) | undefined;
+  onErrorCallback: (() => void) | undefined;
 }
 
 export interface ObserverSpyConfig {
@@ -22,6 +23,7 @@ export class ObserverSpy<T> implements Observer<T> {
     completeWasCalled: false,
     errorValue: undefined,
     onCompleteCallback: undefined,
+    onErrorCallback: undefined,
     errorIsExpected: false,
   };
 
@@ -42,6 +44,9 @@ export class ObserverSpy<T> implements Observer<T> {
     }
     this.state.errorValue = errorVal;
     this.state.errorWasCalled = true;
+    if (this.state.onErrorCallback) {
+      this.state.onErrorCallback();
+    }
   }
 
   complete(): void {
@@ -65,6 +70,15 @@ export class ObserverSpy<T> implements Observer<T> {
 
     return new Promise((resolve) => {
       this.state.onCompleteCallback = resolve;
+    });
+  }
+
+  onError(): Promise<void> {
+    if (this.state.errorWasCalled) {
+      return Promise.resolve();
+    }
+    return new Promise((resolve) => {
+      this.state.onErrorCallback = resolve;
     });
   }
 

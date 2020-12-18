@@ -1,5 +1,5 @@
-import { Observable, of, throwError } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { Observable, of, throwError, timer } from 'rxjs';
+import { delay, switchMap } from 'rxjs/operators';
 import { ObserverSpy } from './observer-spy';
 
 describe('ObserverSpy', () => {
@@ -152,6 +152,40 @@ describe('ObserverSpy', () => {
       const { throwingObservable } = getThrowingObservable();
 
       throwingObservable.subscribe(observerSpy).unsubscribe();
+
+      expect(observerSpy.getError()).toEqual(FAKE_ERROR_MESSAGE);
+    });
+
+    it('should be able to await "onError" if error already received', async () => {
+      const observerSpy: ObserverSpy<string> = new ObserverSpy({ expectErrors: true });
+      const { throwingObservable } = getThrowingObservable();
+
+      throwingObservable.subscribe(observerSpy).unsubscribe();
+
+      await observerSpy.onError();
+
+      expect(observerSpy.getError()).toEqual(FAKE_ERROR_MESSAGE);
+    });
+  });
+
+  describe('GIVEN observable is throwing with delay', () => {
+    const FAKE_ERROR_MESSAGE = 'FAKE ERROR';
+    function getThrowingObservableWithDelay() {
+      const throwingObservable: Observable<string> = timer(1).pipe(
+        switchMap(() => throwError(FAKE_ERROR_MESSAGE))
+      );
+
+      return {
+        throwingObservable,
+      };
+    }
+    it('should be able to await "onError" and check the error', async () => {
+      const observerSpy: ObserverSpy<string> = new ObserverSpy({ expectErrors: true });
+      const { throwingObservable } = getThrowingObservableWithDelay();
+
+      throwingObservable.subscribe(observerSpy);
+
+      await observerSpy.onError();
 
       expect(observerSpy.getError()).toEqual(FAKE_ERROR_MESSAGE);
     });
