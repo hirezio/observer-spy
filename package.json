@@ -67,7 +67,7 @@
     "prettier": "2.0.5",
     "pretty-quick": "2.0.1",
     "rimraf": "3.0.2",
-    "rxjs": "^6.5.5",
+    "rxjs": "~7.4.0",
     "semantic-release": "^17.0.7",
     "travis-deploy-once": "^5.0.11",
     "ts-jest": "^25.4.0",

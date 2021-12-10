@@ -1,5 +1,4 @@
-import { VirtualTimeScheduler } from 'rxjs';
-import { AsyncScheduler } from 'rxjs/internal/scheduler/AsyncScheduler';
+import { TestScheduler } from 'rxjs/testing';
 
 export function fakeTime(callback: (...args: any[]) => any) {
   if (callback.length === 0) {
@@ -11,31 +10,21 @@ export function fakeTime(callback: (...args: any[]) => any) {
 
   if (callback.length === 1) {
     return function () {
-      const virtualScheduler = new VirtualTimeScheduler();
-      AsyncScheduler.delegate = virtualScheduler;
+      /* istanbul ignore next */
+      const testScheduler = new TestScheduler(() => {});
 
-      function customFlush() {
-        virtualScheduler.flush();
-      }
-      const originalReturnedValue = callback(customFlush);
-
-      AsyncScheduler.delegate = undefined;
-
-      return originalReturnedValue;
+      return testScheduler.run(({ flush }) => {
+        return callback(flush);
+      });
     };
   }
 
   return function (done: () => void) {
-    const virtualScheduler = new VirtualTimeScheduler();
-    AsyncScheduler.delegate = virtualScheduler;
+    /* istanbul ignore next */
+    const testScheduler = new TestScheduler(() => {});
 
-    function customFlush() {
-      virtualScheduler.flush();
-    }
-    const originalReturnedValue = callback(customFlush, done);
-
-    AsyncScheduler.delegate = undefined;
-
-    return originalReturnedValue;
+    return testScheduler.run(({ flush }) => {
+      return callback(flush, done);
+    });
   };
 }
