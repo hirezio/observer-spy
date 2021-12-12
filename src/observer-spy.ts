@@ -6,7 +6,7 @@ export interface ObserverState {
   completeWasCalled: boolean;
   errorValue: any;
   errorIsExpected: boolean;
-  onCompleteCallback: (() => void) | undefined;
+  onCompleteCallback: ((value?: unknown) => void) | undefined;
   onErrorCallback: (() => void) | undefined;
 }
 
@@ -52,15 +52,15 @@ export class ObserverSpy<T> implements Observer<T> {
   complete(): void {
     this.state.completeWasCalled = true;
     if (this.state.onCompleteCallback) {
-      this.state.onCompleteCallback();
+      this.state.onCompleteCallback(undefined);
     }
   }
 
   onComplete(): Promise<void>;
-  onComplete(callback: () => void): void;
-  onComplete(callback?: () => void) {
+  onComplete(callback: (value?: unknown) => void): void;
+  onComplete(callback?: (value?: unknown) => void) {
     if (this.state.completeWasCalled) {
-      return callback ? callback() : Promise.resolve();
+      return callback ? callback(undefined) : Promise.resolve();
     }
 
     if (callback) {

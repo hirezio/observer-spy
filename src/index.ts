@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 export { ObserverSpy } from './observer-spy';
 export { SubscriberSpy } from './subscriber-spy';
 export { subscribeSpyTo } from './subscribe-spy-to';
