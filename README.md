@@ -12,6 +12,17 @@ This library makes RxJS Observables testing easy!
 
 <br/>
 
+<div align="center">
+  <a href="https://learn.hirez.io/?utm_source=github&utm_medium=link&utm_campaign=observer-spy">
+    <img src="for-readme/test-angular.jpg"
+      alt="TestAngular.com - Free Angular Testing Workshop - The Roadmap to Angular Testing Mastery"
+      width="600"
+    />
+  </a>
+</div>
+
+<br/>
+
 # Table of Contents
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
@@ -563,19 +574,6 @@ it('should handle done functionality as well', fakeTime((flush, done) => {
 Asynchronous REST calls (using axios, http, fetch, etc.) should not be tested in a unit / micro test... Test those in an integration test! 😜
 
 <br/>
-<br/>
-
-# Learn More:
-
-<div align="center">
-  <a href="https://learn.hirez.io/?utm_source=github&utm_medium=link&utm_campaign=observer-spy">
-    <img src="for-readme/test-angular.jpg"
-      alt="TestAngular.com - Free Angular Testing Workshop - The Roadmap to Angular Testing Mastery"
-      width="600"
-    />
-  </a>
-</div>
-
 <br/>
 
 # 🧠 Wanna become a PRO Observables tester?
