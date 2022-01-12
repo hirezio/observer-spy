@@ -387,7 +387,7 @@ Add this to your jest configuration (i.e `jest.config.js`):
 
 <br/>
 
-### ⚒ Configuring Angular with `autoUnsubscribe`
+### ⚒ Configuring Angular (Karma + Jasmine) with `autoUnsubscribe`
 
 This will add a root level `afterEach()` once that auto unsubscribes observer spies. 
 
