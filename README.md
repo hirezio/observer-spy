@@ -142,7 +142,7 @@ it('should filter even numbers and multiply each number by 10', () => {
     const sourceValues = { a: 1, b: 2, c: 3, d: 4, e: 5, f: 6, g: 7, h: 8, i: 9, j: 10};
 
     const source$ = cold('-a-b-c-d-e-f-g-h-i-j|', sourceValues);
-    const expectedOrder = '-a-b-c-d-e|';
+    const expectedOrder = '-a---b---c---d---e--|';
     const expectedValues = { a: 10, b: 30, c: 50, d: 70, e: 90};
     
     const result$ = source$.pipe(
