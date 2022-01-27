@@ -70,6 +70,15 @@
         "doc",
         "ideas"
       ]
+    },
+    {
+      "login": "armanozak",
+      "name": "Levent Arman Özak",
+      "avatar_url": "https://avatars.githubusercontent.com/u/15855540?v=4",
+      "profile": "https://www.armanozak.com/",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
