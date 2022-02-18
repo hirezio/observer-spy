@@ -82,8 +82,9 @@ export class ObserverSpy<T> implements Observer<T> {
     });
   }
 
-  expectErrors() {
+  expectErrors(): this {
     this.state.errorIsExpected = true;
+    return this;
   }
 
   getValuesLength(): number {

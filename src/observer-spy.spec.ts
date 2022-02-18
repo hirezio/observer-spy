@@ -147,6 +147,15 @@ describe('ObserverSpy', () => {
       expect(observerSpy.receivedError()).toBe(true);
     });
 
+    it('should know whether it got an "error" notification if "expectErrors" was called', () => {
+      const observerSpy: ObserverSpy<string> = new ObserverSpy<string>().expectErrors();
+      const { throwingObservable } = getThrowingObservable();
+
+      throwingObservable.subscribe(observerSpy).unsubscribe();
+
+      expect(observerSpy.receivedError()).toBe(true);
+    });
+
     it('should return the error object it received if "expectErrors" is configured', () => {
       const observerSpy: ObserverSpy<string> = new ObserverSpy({ expectErrors: true });
       const { throwingObservable } = getThrowingObservable();
