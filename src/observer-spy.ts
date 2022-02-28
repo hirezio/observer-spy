@@ -38,7 +38,7 @@ export class ObserverSpy<T> implements Observer<T> {
     this.state.nextWasCalled = true;
   }
 
-  error(errorVal: any): void {
+  error(errorVal: unknown): void {
     if (!this.state.errorIsExpected) {
       throw errorVal;
     }
@@ -58,7 +58,7 @@ export class ObserverSpy<T> implements Observer<T> {
 
   onComplete(): Promise<void>;
   onComplete(callback: (value?: unknown) => void): void;
-  onComplete(callback?: (value?: unknown) => void) {
+  onComplete(callback?: (value?: unknown) => void): any {
     if (this.state.completeWasCalled) {
       return callback ? callback(undefined) : Promise.resolve();
     }

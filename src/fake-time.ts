@@ -1,6 +1,6 @@
 import { TestScheduler } from 'rxjs/testing';
 
-export function fakeTime(callback: (...args: any[]) => any) {
+export function fakeTime(callback: (...args: any[]) => any): any {
   if (callback.length === 0) {
     throw new Error(`
     "fakeTime()" callback must be declared with at least one parameter

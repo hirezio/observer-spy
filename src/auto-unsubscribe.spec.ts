@@ -6,7 +6,6 @@ import {
 } from './auto-unsubscribe';
 import { subscribeSpyTo } from './subscribe-spy-to';
 
-// tslint:disable-next-line:no-unused-expression
 const root = (1, eval)('this');
 
 describe('autoUnsubscribe', () => {
