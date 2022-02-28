@@ -5,18 +5,6 @@ import { subscribeSpyTo } from './subscribe-spy-to';
 
 describe('ObserverSpy', () => {
   describe(`querying the observerSpy`, () => {
-    function getSpyAndObservableWith3Values() {
-      const observerSpy: ObserverSpy<string> = new ObserverSpy();
-      const fakeValues: any[] = ['first', 'second', 'third'];
-      const fakeObservable: Observable<string> = of(...fakeValues);
-
-      return {
-        observerSpy,
-        fakeValues,
-        fakeObservable,
-      };
-    }
-
     given('observable with 3 fake values', () => {
       const fakeValues: any[] = ['first', 'second', 'third'];
       const fakeObservable: Observable<string> = of(...fakeValues);
@@ -37,14 +25,11 @@ describe('ObserverSpy', () => {
       });
     });
 
-    // ----------------------------------------------------
-
     given('an observable which completes immediately', (done) => {
       const fakeObservable: Observable<string> = of();
 
       when('subscribing with observerSpy', () => {
-        const observerSpy: ObserverSpy<string> = new ObserverSpy();
-        fakeObservable.subscribe(observerSpy);
+        const observerSpy = subscribeSpyTo(fakeObservable);
 
         then('should be able to call a callback when it completes synchronously', () => {
           observerSpy.onComplete(() => {
@@ -59,8 +44,7 @@ describe('ObserverSpy', () => {
       const fakeObservable: Observable<string> = of();
 
       when('subscribing with observerSpy and awaiting the complete event', async () => {
-        const observerSpy: ObserverSpy<string> = new ObserverSpy();
-        fakeObservable.subscribe(observerSpy).unsubscribe();
+        const observerSpy = subscribeSpyTo(fakeObservable);
         await observerSpy.onComplete();
 
         then('a "complete" notification should be received', () => {
@@ -73,8 +57,7 @@ describe('ObserverSpy', () => {
       const fakeObservable: Observable<string> = of('fake value').pipe(delay(1));
 
       when('subscribing with observerSpy', () => {
-        const observerSpy: ObserverSpy<string> = new ObserverSpy();
-        fakeObservable.subscribe(observerSpy);
+        const observerSpy = subscribeSpyTo(fakeObservable);
 
         then('a callback should be called when it completes asynchronously', () => {
           observerSpy.onComplete(() => {
@@ -89,8 +72,7 @@ describe('ObserverSpy', () => {
       const fakeObservable: Observable<string> = of('fake value').pipe(delay(1));
 
       when('subscribing with observerSpy and awaiting the complete event', async () => {
-        const observerSpy: ObserverSpy<string> = new ObserverSpy();
-        fakeObservable.subscribe(observerSpy).unsubscribe();
+        const observerSpy = subscribeSpyTo(fakeObservable);
         await observerSpy.onComplete();
 
         then('a "complete" notification should be received', () => {
@@ -118,7 +100,7 @@ describe('ObserverSpy', () => {
     });
 
     given(
-      `an observerSpy with an "expectErrors" configured
+      `an observerSpy configured to expect errors via the "expectErrors" method
        AND an error throwing observable`,
       () => {
         const observerSpy: ObserverSpy<string> = new ObserverSpy();
@@ -176,9 +158,8 @@ describe('ObserverSpy', () => {
       }
     );
 
-    // ***
     given(
-      `an observerSpy with an "expectErrors" called to configure it
+      `an observerSpy configured to expect errors via the "expectErrors" method
        and an error throwing observable`,
       () => {
         const observerSpy: ObserverSpy<string> = new ObserverSpy();
