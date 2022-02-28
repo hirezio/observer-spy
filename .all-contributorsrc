@@ -79,6 +79,18 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "petrzjunior",
+      "name": "Petr Zahradník",
+      "avatar_url": "https://avatars.githubusercontent.com/u/7000918?v=4",
+      "profile": "https://github.com/petrzjunior",
+      "contributions": [
+        "code",
+        "test",
+        "doc",
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7,
