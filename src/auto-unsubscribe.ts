@@ -25,10 +25,6 @@ export function queueForAutoUnsubscribe(subscription: Unsubscribable): void {
   }
 }
 
-export function getGlobalSubscribersLength(): number {
-  return subscribers.length;
-}
-
 export function resetAutoUnsubscribe(): void {
   isAutoUnsubscribeSet = false;
 }

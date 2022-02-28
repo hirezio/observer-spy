@@ -15,7 +15,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "commit": "git-cz",
-    "compile": "tsc",
+    "compile": "tsc -p tsconfig.build.json",
     "build": "run-s clean compile",
     "generate-toc": "doctoc README.md",
     "test": "jest",
@@ -49,6 +49,7 @@
   "devDependencies": {
     "@commitlint/cli": "16.2.1",
     "@commitlint/config-conventional": "16.2.1",
+    "@hirez_io/jest-single": "1.1.1",
     "@types/jest": "^27.4.1",
     "@typescript-eslint/eslint-plugin": "5.12.1",
     "@typescript-eslint/parser": "5.12.1",

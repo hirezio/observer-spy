@@ -1,9 +1,5 @@
 import { Observable } from 'rxjs';
-import {
-  autoUnsubscribe,
-  getGlobalSubscribersLength,
-  resetAutoUnsubscribe,
-} from './auto-unsubscribe';
+import { autoUnsubscribe, resetAutoUnsubscribe } from './auto-unsubscribe';
 import { subscribeSpyTo } from './subscribe-spy-to';
 
 const root = (1, eval)('this');
@@ -19,39 +15,45 @@ describe('autoUnsubscribe', () => {
       .mockImplementation((fn: any) => afterEachCache.push(fn));
   });
 
-  it('should auto unsubscribe after the test ends if it was configured with autoUnsubscribe', () => {
-    autoUnsubscribe();
-
-    const fakeObservable = new Observable();
-    const observerSpy = subscribeSpyTo(fakeObservable);
-
-    expect(getGlobalSubscribersLength()).toBe(1);
-
-    const unsubscribeSpy = jest.spyOn(observerSpy, 'unsubscribe').mockImplementation();
-    afterEachCache.forEach((fn) => fn());
-    expect(observerSpy.unsubscribe).toHaveBeenCalledTimes(1);
-    expect(getGlobalSubscribersLength()).toBe(0);
-
-    // CLEAN UP
-    unsubscribeSpy.mockReset();
-    observerSpy.unsubscribe();
-
+  afterEach(() => {
     resetAutoUnsubscribe();
   });
 
-  it('should NOT auto unsubscribe after the test ends if it was NOT configured with autoUnsubscribe', () => {
-    const fakeObservable = new Observable();
-    const observerSpy = subscribeSpyTo(fakeObservable);
+  given(
+    `autoUnsubscribe is configured 
+         and a subscriberSpy with a spied on 'unsubscribe' method
+         is subscribed to an empty observable`,
+    () => {
+      autoUnsubscribe();
 
-    expect(getGlobalSubscribersLength()).toBe(0);
+      const subscriberSpy = subscribeSpyTo(new Observable());
+      jest.spyOn(subscriberSpy, 'unsubscribe').mockImplementation();
 
-    const unsubscribeSpy = jest.spyOn(observerSpy, 'unsubscribe').mockImplementation();
+      when('afterEach cached function runs, simulating the real afterEach', () => {
+        afterEachCache.forEach((fn) => fn());
 
-    afterEachCache.forEach((fn) => fn());
-    expect(observerSpy.unsubscribe).not.toHaveBeenCalledTimes(1);
+        then('it should be unsubscribed automatically after the test ends', () => {
+          expect(subscriberSpy.unsubscribe).toHaveBeenCalledTimes(1);
+        });
+      });
+    }
+  );
 
-    // CLEAN UP
-    unsubscribeSpy.mockReset();
-    observerSpy.unsubscribe();
-  });
+  given(
+    `autoUnsubscribe is NOT configured 
+         and a subscriberSpy with a spied on 'unsubscribe' method
+         is subscribed to an empty observable`,
+    () => {
+      const subscriberSpy = subscribeSpyTo(new Observable());
+      jest.spyOn(subscriberSpy, 'unsubscribe').mockImplementation();
+
+      when('afterEach cached function runs, simulating the real afterEach', () => {
+        afterEachCache.forEach((fn) => fn());
+
+        then('it should NOT be unsubscribed automatically after the test ends', () => {
+          expect(subscriberSpy.unsubscribe).not.toHaveBeenCalled();
+        });
+      });
+    }
+  );
 });

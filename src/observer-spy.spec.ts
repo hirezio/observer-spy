@@ -1,10 +1,10 @@
 import { Observable, of, throwError, timer } from 'rxjs';
 import { delay, switchMap } from 'rxjs/operators';
 import { ObserverSpy } from './observer-spy';
+import { subscribeSpyTo } from './subscribe-spy-to';
 
 describe('ObserverSpy', () => {
-  describe(`GIVEN the observable emits 3 values and completes
-            WHEN subscribing`, () => {
+  describe(`querying the observerSpy`, () => {
     function getSpyAndObservableWith3Values() {
       const observerSpy: ObserverSpy<string> = new ObserverSpy();
       const fakeValues: any[] = ['first', 'second', 'third'];
@@ -17,186 +17,210 @@ describe('ObserverSpy', () => {
       };
     }
 
-    it('should set receivedNext to true', () => {
-      const { observerSpy, fakeObservable } = getSpyAndObservableWith3Values();
+    given('observable with 3 fake values', () => {
+      const fakeValues: any[] = ['first', 'second', 'third'];
+      const fakeObservable: Observable<string> = of(...fakeValues);
 
-      fakeObservable.subscribe(observerSpy).unsubscribe();
+      when('subscribing with observerSpy', () => {
+        const observerSpy: ObserverSpy<string> = new ObserverSpy();
+        fakeObservable.subscribe(observerSpy).unsubscribe();
 
-      expect(observerSpy.receivedNext()).toBe(true);
-    });
-
-    it('should return the right values', () => {
-      const {
-        observerSpy,
-        fakeObservable,
-        fakeValues,
-      } = getSpyAndObservableWith3Values();
-
-      fakeObservable.subscribe(observerSpy).unsubscribe();
-
-      expect(observerSpy.getValues()).toEqual(fakeValues);
-    });
-
-    it('should return the values length of 3', () => {
-      const { observerSpy, fakeObservable } = getSpyAndObservableWith3Values();
-
-      fakeObservable.subscribe(observerSpy).unsubscribe();
-
-      expect(observerSpy.getValuesLength()).toEqual(3);
-    });
-
-    it('should be able to return the correct first value', () => {
-      const { observerSpy, fakeObservable } = getSpyAndObservableWith3Values();
-
-      fakeObservable.subscribe(observerSpy).unsubscribe();
-
-      expect(observerSpy.getFirstValue()).toEqual('first');
-    });
-
-    it('should be able to return the correct value at any index', () => {
-      const { observerSpy, fakeObservable } = getSpyAndObservableWith3Values();
-
-      fakeObservable.subscribe(observerSpy).unsubscribe();
-
-      expect(observerSpy.getValueAt(1)).toEqual('second');
-    });
-
-    it('should be able to return the correct last value', () => {
-      const { observerSpy, fakeObservable } = getSpyAndObservableWith3Values();
-
-      fakeObservable.subscribe(observerSpy).unsubscribe();
-
-      expect(observerSpy.getLastValue()).toEqual('third');
-    });
-
-    it('should know whether it got a "complete" notification', () => {
-      const { observerSpy, fakeObservable } = getSpyAndObservableWith3Values();
-
-      fakeObservable.subscribe(observerSpy).unsubscribe();
-
-      expect(observerSpy.receivedComplete()).toBe(true);
-    });
-
-    it('should be able to call a callback when it completes synchronously', (done) => {
-      const { observerSpy, fakeObservable } = getSpyAndObservableWith3Values();
-
-      fakeObservable.subscribe(observerSpy);
-
-      observerSpy.onComplete(() => {
-        expect(observerSpy.receivedComplete()).toBe(true);
-        done();
+        then('all queries should work', () => {
+          expect(observerSpy.receivedNext()).toBe(true);
+          expect(observerSpy.getValues()).toEqual(fakeValues);
+          expect(observerSpy.getValuesLength()).toEqual(3);
+          expect(observerSpy.getFirstValue()).toEqual('first');
+          expect(observerSpy.getValueAt(1)).toEqual('second');
+          expect(observerSpy.getLastValue()).toEqual('third');
+          expect(observerSpy.receivedComplete()).toBe(true);
+        });
       });
     });
 
-    it('should return a resolved promise when it completes synchronously', async () => {
-      const { observerSpy, fakeObservable } = getSpyAndObservableWith3Values();
+    // ----------------------------------------------------
 
-      fakeObservable.subscribe(observerSpy);
+    given('an observable which completes immediately', (done) => {
+      const fakeObservable: Observable<string> = of();
 
-      await observerSpy.onComplete();
-      expect(observerSpy.receivedComplete()).toBe(true);
-    });
+      when('subscribing with observerSpy', () => {
+        const observerSpy: ObserverSpy<string> = new ObserverSpy();
+        fakeObservable.subscribe(observerSpy);
 
-    it('should be able to call a callback when it completes asynchronously', (done) => {
-      const { observerSpy, fakeObservable } = getSpyAndObservableWith3Values();
-
-      fakeObservable.pipe(delay(1)).subscribe(observerSpy);
-
-      observerSpy.onComplete(() => {
-        expect(observerSpy.receivedComplete()).toBe(true);
-        done();
+        then('should be able to call a callback when it completes synchronously', () => {
+          observerSpy.onComplete(() => {
+            expect(observerSpy.receivedComplete()).toBe(true);
+            done();
+          });
+        });
       });
     });
 
-    it('should return a resolved promise when it completes asynchronously', async () => {
-      const { observerSpy, fakeObservable } = getSpyAndObservableWith3Values();
+    given('an observable which completes immediately', () => {
+      const fakeObservable: Observable<string> = of();
 
-      fakeObservable.pipe(delay(1)).subscribe(observerSpy);
+      when('subscribing with observerSpy and awaiting the complete event', async () => {
+        const observerSpy: ObserverSpy<string> = new ObserverSpy();
+        fakeObservable.subscribe(observerSpy).unsubscribe();
+        await observerSpy.onComplete();
 
-      await observerSpy.onComplete();
-      expect(observerSpy.receivedComplete()).toBe(true);
+        then('a "complete" notification should be received', () => {
+          expect(observerSpy.receivedComplete()).toBe(true);
+        });
+      });
+    });
+
+    given('an observable with a delay', (done) => {
+      const fakeObservable: Observable<string> = of('fake value').pipe(delay(1));
+
+      when('subscribing with observerSpy', () => {
+        const observerSpy: ObserverSpy<string> = new ObserverSpy();
+        fakeObservable.subscribe(observerSpy);
+
+        then('a callback should be called when it completes asynchronously', () => {
+          observerSpy.onComplete(() => {
+            expect(observerSpy.receivedComplete()).toBe(true);
+            done();
+          });
+        });
+      });
+    });
+
+    given('a observable with a delay', () => {
+      const fakeObservable: Observable<string> = of('fake value').pipe(delay(1));
+
+      when('subscribing with observerSpy and awaiting the complete event', async () => {
+        const observerSpy: ObserverSpy<string> = new ObserverSpy();
+        fakeObservable.subscribe(observerSpy).unsubscribe();
+        await observerSpy.onComplete();
+
+        then('a "complete" notification should be received', () => {
+          expect(observerSpy.receivedComplete()).toBe(true);
+        });
+      });
     });
   });
 
-  describe('GIVEN observable throws WHEN subscribing', () => {
+  describe('handling errors', () => {
     const FAKE_ERROR_MESSAGE = 'FAKE ERROR';
-    function getThrowingObservable() {
-      const throwingObservable: Observable<string> = throwError(FAKE_ERROR_MESSAGE);
 
-      return {
-        throwingObservable,
-      };
-    }
-
-    it('should throw the original error if "expectErrors" is NOT configured', () => {
+    given('an observerSpy with an "expectErrors" NOT configured', () => {
       const observerSpy: ObserverSpy<string> = new ObserverSpy();
-      try {
-        observerSpy.error(FAKE_ERROR_MESSAGE);
-      } catch (expectedError) {
-        expect(expectedError).toBe(FAKE_ERROR_MESSAGE);
+
+      when('triggering an error with a fake message', () => {
+        try {
+          observerSpy.error(FAKE_ERROR_MESSAGE);
+        } catch (expectedError) {
+          then('should return the original error', () => {
+            expect(expectedError).toBe(FAKE_ERROR_MESSAGE);
+          });
+        }
+      });
+    });
+
+    given(
+      `an observerSpy with an "expectErrors" configured
+       AND an error throwing observable`,
+      () => {
+        const observerSpy: ObserverSpy<string> = new ObserverSpy();
+        observerSpy.expectErrors();
+        const throwingObservable: Observable<string> = throwError(
+          () => FAKE_ERROR_MESSAGE
+        );
+
+        when('subscribing with observerSpy', () => {
+          throwingObservable.subscribe(observerSpy).unsubscribe();
+
+          then('should know whether it got an "error" notification', () => {
+            expect(observerSpy.receivedError()).toBe(true);
+          });
+        });
       }
-    });
+    );
 
-    it('should know whether it got an "error" notification if "expectErrors" is configured', () => {
-      const observerSpy: ObserverSpy<string> = new ObserverSpy();
-      observerSpy.expectErrors();
-      const { throwingObservable } = getThrowingObservable();
+    given(
+      `an observerSpy with an "expectErrors" configured via the constructor
+       AND an error throwing observable`,
+      () => {
+        const observerSpy: ObserverSpy<string> = new ObserverSpy({ expectErrors: true });
+        const throwingObservable: Observable<string> = throwError(
+          () => FAKE_ERROR_MESSAGE
+        );
 
-      throwingObservable.subscribe(observerSpy).unsubscribe();
+        when('subscribing with observerSpy', () => {
+          throwingObservable.subscribe(observerSpy).unsubscribe();
 
-      expect(observerSpy.receivedError()).toBe(true);
-    });
+          then('should return the observable error value', () => {
+            expect(observerSpy.getError()).toEqual(FAKE_ERROR_MESSAGE);
+          });
+        });
+      }
+    );
 
-    it('should know whether it got an "error" notification if "expectErrors" was called', () => {
-      const observerSpy: ObserverSpy<string> = new ObserverSpy<string>().expectErrors();
-      const { throwingObservable } = getThrowingObservable();
+    given(
+      `an observerSpy with an "expectErrors" configured via the constructor
+       and an error throwing observable`,
+      () => {
+        const observerSpy: ObserverSpy<string> = new ObserverSpy({ expectErrors: true });
+        const throwingObservable: Observable<string> = throwError(
+          () => FAKE_ERROR_MESSAGE
+        );
 
-      throwingObservable.subscribe(observerSpy).unsubscribe();
+        when('subscribing with observerSpy and awaiting the error', async () => {
+          throwingObservable.subscribe(observerSpy).unsubscribe();
+          await observerSpy.onError();
 
-      expect(observerSpy.receivedError()).toBe(true);
-    });
+          then('should return the observable error value', () => {
+            expect(observerSpy.getError()).toEqual(FAKE_ERROR_MESSAGE);
+          });
+        });
+      }
+    );
 
-    it('should return the error object it received if "expectErrors" is configured', () => {
-      const observerSpy: ObserverSpy<string> = new ObserverSpy({ expectErrors: true });
-      const { throwingObservable } = getThrowingObservable();
+    // ***
+    given(
+      `an observerSpy with an "expectErrors" called to configure it
+       and an error throwing observable`,
+      () => {
+        const observerSpy: ObserverSpy<string> = new ObserverSpy();
+        observerSpy.expectErrors();
+        const throwingObservable: Observable<string> = throwError(
+          () => FAKE_ERROR_MESSAGE
+        );
 
-      throwingObservable.subscribe(observerSpy).unsubscribe();
+        when(
+          `getting the errorPromise before subscribing with observerSpy 
+           and awaiting the error state`,
+          async () => {
+            const errorPromise = observerSpy.onError();
+            throwingObservable.subscribe(observerSpy).unsubscribe();
+            await errorPromise;
 
-      expect(observerSpy.getError()).toEqual(FAKE_ERROR_MESSAGE);
-    });
+            then('should return the observable error value', () => {
+              expect(observerSpy.getError()).toEqual(FAKE_ERROR_MESSAGE);
+            });
+          }
+        );
+      }
+    );
 
-    it('should be able to await "onError" if error already received', async () => {
-      const observerSpy: ObserverSpy<string> = new ObserverSpy({ expectErrors: true });
-      const { throwingObservable } = getThrowingObservable();
+    given(
+      `an observerSpy with an "expectErrors" configured via the constructor
+       and a DELAYED error throwing observable`,
+      () => {
+        const observerSpy: ObserverSpy<string> = new ObserverSpy({ expectErrors: true });
+        const throwingObservable: Observable<string> = timer(1).pipe(
+          switchMap(() => throwError(() => FAKE_ERROR_MESSAGE))
+        );
 
-      throwingObservable.subscribe(observerSpy).unsubscribe();
+        when('subscribing with observerSpy and awaiting the error', async () => {
+          throwingObservable.subscribe(observerSpy).unsubscribe();
+          await observerSpy.onError();
 
-      await observerSpy.onError();
-
-      expect(observerSpy.getError()).toEqual(FAKE_ERROR_MESSAGE);
-    });
-  });
-
-  describe('GIVEN observable is throwing with delay', () => {
-    const FAKE_ERROR_MESSAGE = 'FAKE ERROR';
-    function getThrowingObservableWithDelay() {
-      const throwingObservable: Observable<string> = timer(1).pipe(
-        switchMap(() => throwError(FAKE_ERROR_MESSAGE))
-      );
-
-      return {
-        throwingObservable,
-      };
-    }
-    it('should be able to await "onError" and check the error', async () => {
-      const observerSpy: ObserverSpy<string> = new ObserverSpy({ expectErrors: true });
-      const { throwingObservable } = getThrowingObservableWithDelay();
-
-      throwingObservable.subscribe(observerSpy);
-
-      await observerSpy.onError();
-
-      expect(observerSpy.getError()).toEqual(FAKE_ERROR_MESSAGE);
-    });
+          then('should return the observable error value', () => {
+            expect(observerSpy.getError()).toEqual(FAKE_ERROR_MESSAGE);
+          });
+        });
+      }
+    );
   });
 });

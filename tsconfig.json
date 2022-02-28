@@ -13,8 +13,9 @@
     "lib": ["es2015", "es2016"],
     "pretty": true,
     "strict": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "typeRoots": ["node_modules/@types", "node_modules/@hirez_io"],
+    "types": ["jest", "node", "@hirez_io/jest-single"]
   },
-  "include": ["src"],
-  "exclude": ["**/*.spec.ts"]
+  "include": ["src"]
 }
