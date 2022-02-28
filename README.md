@@ -341,10 +341,12 @@ it('should spy on Observable errors', () => {
   const fakeObservable = throwError('OOPS');
 
   const observerSpy = new ObserverSpy({expectErrors: true}); // <-- IMPORTANT
+  // OR
+  const observerSpy = new ObserverSpy().expectErrors(); // <-- ALTERNATIVE WAY TO SET IT
 
-  // BTW, this could also be set like this:
+  // Or even...
   observerSpy.expectErrors(); // <-- ALTERNATIVE WAY TO SET IT
-
+  
   fakeObservable.subscribe(observerSpy);
 
   expect(observerSpy.receivedError()).toBe(true);
