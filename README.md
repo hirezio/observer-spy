@@ -344,6 +344,8 @@ it('should spy on Observable errors', () => {
 
   // BTW, this could also be set like this:
   observerSpy.expectErrors(); // <-- ALTERNATIVE WAY TO SET IT
+  // or even like this:
+  observerSpy = new ObserverSpy().expectErrors(); // <-- ALTERNATIVE WAY TO SET IT
 
   fakeObservable.subscribe(observerSpy);
 
