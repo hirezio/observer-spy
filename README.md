@@ -7,7 +7,7 @@ This library makes RxJS Observables testing easy!
 ![Build](https://github.com/hirezio/observer-spy/workflows/Build/badge.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![codecov](https://img.shields.io/codecov/c/github/hirezio/observer-spy.svg)](https://codecov.io/gh/hirezio/observer-spy) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <br/>
@@ -617,6 +617,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/katharinakoal"><img src="https://avatars3.githubusercontent.com/u/17751573?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Katharina Koal</b></sub></a><br /><a href="https://github.com/hirezio/observer-spy/commits?author=katharinakoal" title="Code">💻</a> <a href="https://github.com/hirezio/observer-spy/commits?author=katharinakoal" title="Tests">⚠️</a> <a href="https://github.com/hirezio/observer-spy/commits?author=katharinakoal" title="Documentation">📖</a> <a href="#ideas-katharinakoal" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/hirezio/observer-spy/issues?q=author%3Akatharinakoal" title="Bug reports">🐛</a></td>
     <td align="center"><a href="http://www.linkedin.com/in/thomasburleson"><img src="https://avatars3.githubusercontent.com/u/210413?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Thomas Burleson</b></sub></a><br /><a href="https://github.com/hirezio/observer-spy/commits?author=ThomasBurleson" title="Code">💻</a> <a href="https://github.com/hirezio/observer-spy/commits?author=ThomasBurleson" title="Tests">⚠️</a> <a href="https://github.com/hirezio/observer-spy/commits?author=ThomasBurleson" title="Documentation">📖</a> <a href="#ideas-ThomasBurleson" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://www.armanozak.com/"><img src="https://avatars.githubusercontent.com/u/15855540?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Levent Arman Özak</b></sub></a><br /><a href="https://github.com/hirezio/observer-spy/commits?author=armanozak" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/petrzjunior"><img src="https://avatars.githubusercontent.com/u/7000918?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Petr Zahradník</b></sub></a><br /><a href="https://github.com/hirezio/observer-spy/commits?author=petrzjunior" title="Code">💻</a> <a href="https://github.com/hirezio/observer-spy/commits?author=petrzjunior" title="Tests">⚠️</a> <a href="https://github.com/hirezio/observer-spy/commits?author=petrzjunior" title="Documentation">📖</a> <a href="#ideas-petrzjunior" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
