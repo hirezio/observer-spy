@@ -13,7 +13,7 @@ This library makes RxJS Observables testing easy!
 <br/>
 
 <div align="center">
-  <a href="https://learn.hirez.io/?utm_source=github&utm_medium=link&utm_campaign=observer-spy">
+  <a href="https://hirez.io/?utm_source=github&utm_medium=link&utm_campaign=observer-spy">
     <img src="for-readme/test-angular.jpg"
       alt="TestAngular.com - Free Angular Testing Workshop - The Roadmap to Angular Testing Mastery"
       width="600"
@@ -580,7 +580,7 @@ Asynchronous REST calls (using axios, http, fetch, etc.) should not be tested in
 
 # 🧠 Wanna become a PRO Observables tester?
 
-In [Angular Class Testing In action](https://learn.hirez.io/?utm_source=github&utm_medium=link&utm_campaign=observer-spy) course Shai Reznik goes over all the differences and show you how to use observer spies to test complex Observable chains with `switchMap`, `interval` etc...
+In [Angular Class Testing In action](https://hirez.io/?utm_source=github&utm_medium=link&utm_campaign=observer-spy) course Shai Reznik goes over all the differences and show you how to use observer spies to test complex Observable chains with `switchMap`, `interval` etc...
 
 <br/>
 <br/>
