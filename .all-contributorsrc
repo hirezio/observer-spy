@@ -91,6 +91,15 @@
         "doc",
         "ideas"
       ]
+    },
+    {
+      "login": "JasonLandbridge",
+      "name": "Jason Landbridge",
+      "avatar_url": "https://avatars.githubusercontent.com/u/15127381?v=4",
+      "profile": "https://github.com/JasonLandbridge",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
