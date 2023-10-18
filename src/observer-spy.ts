@@ -91,7 +91,7 @@ export class ObserverSpy<T> implements Observer<T> {
     return this.onNextValues.length;
   }
 
-  getValues(): any[] {
+  getValues(): T[] {
     return this.onNextValues;
   }
 
